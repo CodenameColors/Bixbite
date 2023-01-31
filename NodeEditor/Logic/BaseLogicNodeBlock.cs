@@ -1,9 +1,9 @@
-﻿using NodeEditor.Resources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using BixBite.Resources;
 
-namespace NodeEditor.Components.Logic
+namespace BixBite.NodeEditor.Logic
 {
 
 	public enum EConditionalTypes

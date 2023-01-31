@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NodeEditor.Components.Logic;
+﻿using System.Collections.Generic;
 
-namespace NodeEditor.Components
+namespace BixBite.NodeEditor.Logic
 {
-	class NOTBlock : BaseLogicNodeBlock
+	public class NOTBlock : BaseLogicNodeBlock
 	{
 		public NOTBlock(bool bInitNodes = true) : base(bInitNodes)
 		{

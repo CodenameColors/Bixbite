@@ -39,9 +39,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="NodeEditor">
-      <HintPath>..\AmethystEngine\Resources\NodeEditor.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -68,14 +65,8 @@
     <Compile Include="Characters\NPC.cs" />
     <Compile Include="Characters\PartyMember.cs" />
     <Compile Include="Characters\Player.cs" />
-    <Compile Include="Combat\CombatActions.cs" />
-    <Compile Include="Combat\CombatDelegates\FollowUpAttacksDelegates.cs" />
-    <Compile Include="Combat\CombatDelegates\ItemDelegates.cs" />
-    <Compile Include="Combat\CombatDelegates\ModifierDelegates.cs" />
-    <Compile Include="Combat\CombatDelegates\SkillDelegates.cs" />
     <Compile Include="Combat\CombatEnums.cs" />
     <Compile Include="Combat\CombatHelpers.cs" />
-    <Compile Include="Combat\CombatSystem.cs" />
     <Compile Include="Combat\Equipables\Accessory.cs" />
     <Compile Include="Combat\Equipables\Clothes.cs" />
     <Compile Include="Combat\Equipables\Equipable.cs" />
@@ -113,10 +104,12 @@
     <Compile Include="NodeEditor\ConnectionNode.cs" />
     <Compile Include="NodeEditor\ConstantNodeBlock.cs" />
     <Compile Include="NodeEditor\DialogueNodeBlock.cs" />
+    <Compile Include="NodeEditor\ExitNodeBlock.cs" />
     <Compile Include="NodeEditor\Logic\ANDBlock.cs" />
     <Compile Include="NodeEditor\Logic\BaseLogicNodeBlock.cs" />
     <Compile Include="NodeEditor\Logic\NOTBlock.cs" />
     <Compile Include="NodeEditor\Logic\ORBlock.cs" />
+    <Compile Include="NodeEditor\StartNodeBlock.cs" />
     <Compile Include="Particles\HitSparkPEmitter.cs" />
     <Compile Include="Particles\Particle.cs" />
     <Compile Include="Particles\PBoxEmitter.cs" />
@@ -162,6 +155,8 @@
     <Compile Include="Rendering\UI\TextBlock\GameTextBlock.cs" />
     <Compile Include="Resources\EE_Exceptions.cs" />
     <Compile Include="Resources\IProperties.cs" />
+    <Compile Include="Resources\IStateMachineTraversal.cs" />
+    <Compile Include="Resources\NodeEditorExceptions.cs" />
     <Compile Include="Resources\ObservableDictionary.cs" />
     <Compile Include="Resources\ObservablePropertyDictionary.cs" />
     <Compile Include="Resources\ObservableSortedDictionary.cs" />

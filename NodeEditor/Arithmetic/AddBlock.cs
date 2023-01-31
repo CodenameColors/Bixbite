@@ -1,4 +1,4 @@
-﻿namespace NodeEditor.Components.Arithmetic
+﻿namespace BixBite.NodeEditor.Arithmetic
 {
 	public class AddBlock : BaseArithmeticBlock
 	{

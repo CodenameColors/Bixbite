@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using NodeEditor.Components.Logic;
-using NodeEditor.Resources;
+using BixBite.NodeEditor.Logic;
+using BixBite.Resources;
 
-namespace NodeEditor.Components
+namespace BixBite.NodeEditor
 {
 	public class GetConstantNodeBlock : BaseNodeBlock, INotifyPropertyChanged
 	{
@@ -23,8 +18,8 @@ namespace NodeEditor.Components
 		}
 
 
-		private BlockNodeEditor.RuntimeVars data = new BlockNodeEditor.RuntimeVars();
-		public BlockNodeEditor.RuntimeVars InternalData
+		private RuntimeVars data = new RuntimeVars();
+		public RuntimeVars InternalData
 		{
 			get { return data; }
 			set
@@ -49,7 +44,7 @@ namespace NodeEditor.Components
 				this.OutputNodes.Add(new ConnectionNode(this, "OutputNode1", type));
 		}
 
-		public GetConstantNodeBlock(ECOnnectionType type, ref BlockNodeEditor.RuntimeVars varptr, bool bInitNodes = true)
+		public GetConstantNodeBlock(ECOnnectionType type, ref RuntimeVars varptr, bool bInitNodes = true)
 		{
 			DType = type;
 			Header = String.Format("Get Constant [{0}]", type.ToString());
@@ -334,7 +329,7 @@ namespace NodeEditor.Components
 
 			if (OldValue.ConnectedNodes != null)
 			{
-				BlockNodeEditor.RuntimeVars rtv = new BlockNodeEditor.RuntimeVars()
+				RuntimeVars rtv = new RuntimeVars()
 				{
 					VarData = in2,
 					VarName = ((GetConstantNodeBlock)OldValue.ConnectedNodes[0].ParentBlock).InternalData.VarName,

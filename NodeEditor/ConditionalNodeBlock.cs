@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NodeEditor.Components.Logic;
-using NodeEditor.Resources;
+using BixBite.NodeEditor.Logic;
+using BixBite.Resources;
 
-namespace NodeEditor.Components
+namespace BixBite.NodeEditor
 {
 	public class ConditionalNodeBlock : BaseNodeBlock
 	{
@@ -41,7 +37,7 @@ namespace NodeEditor.Components
 			set { OutputNodes[1] = value; }
 		}
 
-		private BlockNodeEditor.RuntimeVars data = new BlockNodeEditor.RuntimeVars();
+		private RuntimeVars data = new RuntimeVars();
 
 		public ConditionalNodeBlock(ECOnnectionType nodetype, EConditionalTypes condType, bool bInitNode = true)
 		{
@@ -60,10 +56,10 @@ namespace NodeEditor.Components
 			this.CondType = condType;
 		}
 
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-		}
+		//public override void OnApplyTemplate()
+		//{
+		//	base.OnApplyTemplate();
+		//}
 
 		/// <summary>
 		/// check to make sure all the nodes on this block have valid connection points.

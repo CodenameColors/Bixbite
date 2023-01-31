@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using NodeEditor.Components.Logic;
-using NodeEditor.Resources;
+using BixBite.NodeEditor.Logic;
+using BixBite.Resources;
 
-namespace NodeEditor.Components
+namespace BixBite.NodeEditor
 {
 	public class DialogueNodeBlock : BaseNodeBlock, IStateMachineTraversal
 	{
@@ -37,10 +37,10 @@ namespace NodeEditor.Components
 
 		public List<Object> DialogueSprites = new List<object>();
 		public ObservableCollection<String> DialogueTextOptions { get; set; }
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-		}
+		//public override void OnApplyTemplate()
+		//{
+		//	base.OnApplyTemplate();
+		//}
 
 		public void ChangeDialogueData(String newDialogueText, int choiceVal = 0)
 		{

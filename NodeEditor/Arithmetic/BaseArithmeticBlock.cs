@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using NodeEditor.Components.Logic;
-using NodeEditor.Resources;
+using BixBite.NodeEditor.Logic;
+using BixBite.Resources;
 
-namespace NodeEditor.Components.Arithmetic
+namespace BixBite.NodeEditor.Arithmetic
 {
 	public class BaseArithmeticBlock : BaseNodeBlock, INotifyPropertyChanged
 	{

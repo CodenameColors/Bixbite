@@ -12,10 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Xml;
+using BixBite.NodeEditor;
+using BixBite.NodeEditor.Logic;
 using BixBite.Resources;
-using NodeEditor;
-using NodeEditor.Components;
-using NodeEditor.Components.Logic;
 using TimelinePlayer.Components;
 
 namespace BixBite
@@ -54,7 +53,7 @@ namespace BixBite
 		/// Dialogue scenes have internal parameters that are used for this scene ALONE.
 		/// this list keeps track of them.
 		/// </summary>
-		public List<BlockNodeEditor.RuntimeVars> DialogueSceneParams = new List<BlockNodeEditor.RuntimeVars>();
+		public List<RuntimeVars> DialogueSceneParams = new List<RuntimeVars>();
 
 		/// <summary>
 		/// Every dialogue scene can have branching paths and or multiple dialogue blocks.
@@ -257,7 +256,7 @@ namespace BixBite
 						if (reader.Name == "Var" && reader.NodeType == XmlNodeType.Element)
 						{
 							retDialogueScene.DialogueSceneParams.Add(
-								new BlockNodeEditor.RuntimeVars() {
+								new RuntimeVars() {
 									VarName = reader.GetAttribute("Name"),
 									Type = Type.GetType(reader.GetAttribute("Type")) ,
 									OrginalVarData = Convert.ChangeType(reader.GetAttribute("DefaultVal"), Type.GetType(reader.GetAttribute("Type"))),

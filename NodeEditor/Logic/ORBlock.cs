@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NodeEditor.Components.Logic;
-
-namespace NodeEditor.Components
+﻿namespace BixBite.NodeEditor.Logic
 {
-	class ORBlock : BaseLogicNodeBlock
+	public class ORBlock : BaseLogicNodeBlock
 	{
 		public ORBlock(bool bInitNodes = true) : base(bInitNodes)
 		{

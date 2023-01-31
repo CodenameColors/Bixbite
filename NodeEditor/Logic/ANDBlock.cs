@@ -1,6 +1,6 @@
-﻿namespace NodeEditor.Components.Logic
+﻿namespace BixBite.NodeEditor.Logic
 {
-	class ANDBlock : BaseLogicNodeBlock
+	public class ANDBlock : BaseLogicNodeBlock
 	{
 
 		public ANDBlock(bool bInitNodes = true) : base(bInitNodes)

@@ -1,14 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NodeEditor.Components.Logic;
-using NodeEditor.Resources;
+using BixBite.NodeEditor.Logic;
+using BixBite.Resources;
 
-namespace NodeEditor.Components
+namespace BixBite.NodeEditor
 {
+
+	public partial class RuntimeVars
+	{
+		public string VarName { get; set; }
+		public object VarData { get; set; }
+		public object OrginalVarData { get; set; }
+		public Type Type { get; set; }
+
+		public RuntimeVars()
+		{
+			Type = typeof(int);
+		}
+
+		public static RuntimeVars GetRuntimeVar(List<RuntimeVars> list, String Name)
+		{
+			foreach (RuntimeVars item in list)
+			{
+				if (item.VarName == Name) return item;
+			}
+			return null;
+		}
+
+		public bool Equals(RuntimeVars rv)
+		{
+			return rv.Type.Equals(Type) && rv.VarData.Equals(VarData) && rv.VarName.Equals(VarName);
+		}
+
+		public override bool Equals(object obj)
+		{
+			return this.Equals(obj as RuntimeVars);
+		}
+
+		public override int GetHashCode()
+		{
+			return 1;//VarName.GetHashCode() ^ VarData.GetHashCode() ^ Type.GetHashCode();
+		}
+
+	}
+
 	public enum EActiveStatus
 	{
 		Active,
@@ -19,9 +55,10 @@ namespace NodeEditor.Components
 
 	}
 
-	public abstract class BaseNodeBlock : System.Windows.Controls.Button, INotifyPropertyChanged, IStateMachineTraversal
+	public abstract partial class BaseNodeBlock :/* System.Windows.Controls.Button,*/ INotifyPropertyChanged, IStateMachineTraversal
 	{
 		public String Header { get; set; }
+		public String Name { get; set; }
 		public String NewValue_Constant { get; set; }
 
 		public double LocX = 0.0;

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace NodeEditor.Components.Arithmetic
+namespace BixBite.NodeEditor.Arithmetic
 {
 	public class SubtractBlock : BaseArithmeticBlock
 	{
