@@ -1,10 +1,8 @@
 ﻿using System;
-using System.CodeDom;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ProjectileTester.Components.Utillties;
 
-namespace ProjectileTester.Components
+namespace BixBite.Projectiles
 {
 	public class Projectile
 	{
