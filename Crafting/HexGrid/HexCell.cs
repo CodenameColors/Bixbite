@@ -1,18 +1,10 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using BixBite;
-using BixBite.Rendering;
 using BixBite.Rendering.UI.TextBlock;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace CraftingSystemTester.Components.Crafting.HexGrid
+namespace BixBite.Crafting.HexGrid
 {
 
 	public class HexCellConnection

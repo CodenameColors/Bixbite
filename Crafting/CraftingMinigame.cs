@@ -1,23 +1,20 @@
-﻿#define EE_DEBUG
+﻿#define Crafting_EE_Debug
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using BixBite.Combat;
+using BixBite.Crafting.HexGrid;
 using BixBite.Rendering.UI.Image;
+using BixBite.Rendering.UI.ListBox;
 using BixBite.Rendering.UI.ProgressBar;
 using BixBite.Rendering.UI.TextBlock;
-using CraftingSystemTester.Components.Crafting.HexGrid;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Cryptography.X509Certificates;
-using BixBite.Combat;
-using BixBite.Crafting;
-using BixBite.Rendering.UI.ListBox;
 
-namespace CraftingSystemTester.Components.Crafting
+namespace BixBite.Crafting
 {
 	/// <summary>
 	/// This class is a singleton class as there can only be ONE crafting minigame instance at one time.
@@ -494,7 +491,7 @@ namespace CraftingSystemTester.Components.Crafting
 		//END oF Elemental Effects section
 
 
-#if EE_DEBUG
+#if Crafting_EE_Debug
 		//Debug Textblock
 		private GameTextBlock _debugGameTextBlock = null;
 
@@ -813,13 +810,13 @@ namespace CraftingSystemTester.Components.Crafting
 			LinkedListNode<Tuple<PuzzlePieceHexCell, HexCell>> currentListNode = currentNodesLinkedList.First;
 
 			// Before we scan our whole puzzle piece let's check the Anchor point isn't trying to overlap anything.
-			CraftingSystemTester.DebugOutToConsole("Checking desired Anchor point on grid for overlap");
+			CraftingMinigame.DebugOutToConsole("Checking desired Anchor point on grid for overlap");
 			if (gridAnchorCell.LinkedDataCell != null)
 			{
-				CraftingSystemTester.DebugOutToConsole("Desired Anchor point is already taken, we cannot place this piece.");
+				CraftingMinigame.DebugOutToConsole("Desired Anchor point is already taken, we cannot place this piece.");
 				return null;
 			}
-			else CraftingSystemTester.DebugOutToConsole("Desired Anchor point isn't taken. We can use this spot");
+			else CraftingMinigame.DebugOutToConsole("Desired Anchor point isn't taken. We can use this spot");
 
 			//Scan the linked list until the end is reached.
 			do
@@ -893,7 +890,7 @@ namespace CraftingSystemTester.Components.Crafting
 				case EMagicType.Luminous:
 					return Color.LightGray;
 			}
-#if EE_DEBUG
+#if Crafting_EE_Debug
 			System.Diagnostics.Debug.WriteLine(
 				String.Format("Attempted to get a Color from a Magic Type but failed. Given Val was  [{0}]", desiredMagicType));
 #endif
@@ -920,7 +917,7 @@ namespace CraftingSystemTester.Components.Crafting
 
 				if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
 				{
-					CraftingSystemTester.DebugOutToConsole("Left Click on Piece not on grid");
+					CraftingMinigame.DebugOutToConsole("Left Click on Piece not on grid");
 
 					//Can we place the puzzle piece though?
 					LinkedList<Tuple<PuzzlePieceHexCell, HexCell>> temp = null;
@@ -935,7 +932,7 @@ namespace CraftingSystemTester.Components.Crafting
 					catch (Exception ex)
 					{
 						Console.WriteLine(ex.Message);
-#if EE_DEBUG
+#if Crafting_EE_Debug
 						DebugTextblock_TextBind = "Tried To place Piece, BUT it off the grid...";
 #endif
 						//return false;
@@ -972,7 +969,7 @@ namespace CraftingSystemTester.Components.Crafting
 				//Reset if the player has a selected piece currently
 				else if (mouseState.RightButton == ButtonState.Pressed && prevMouseState.RightButton == ButtonState.Released)
 				{
-					CraftingSystemTester.DebugOutToConsole("Right Click on Piece not on grid");
+					CraftingMinigame.DebugOutToConsole("Right Click on Piece not on grid");
 
 					this.CurrentSelectedPuzzlePiecePair.Value.SetTransparency(1.0f);
 
@@ -1016,7 +1013,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				this.PuzzleBoardGrid2D.SelectedCell = hexcell;
 			}
-#if EE_DEBUG
+#if Crafting_EE_Debug
 			//FOR DEBUGGING. Currently reads out HexGrid cell linked data to Console.
 			OnDebugRequest(mouseState, prevMouseState);
 #endif
@@ -1065,7 +1062,7 @@ namespace CraftingSystemTester.Components.Crafting
 			//				if (OnCancelRequest(mouseState, prevMouseState, tempPiece)) return; //we have canceled so leave this state.
 			//			}
 
-			//#if EE_DEBUG
+			//#if Crafting_EE_Debug
 			//			//FOR DEBUGGING. Currently reads out HexGrid cell linked data to Console.
 			//			OnDebugRequest(mouseState, prevMouseState);
 			//#endif
@@ -1100,7 +1097,7 @@ namespace CraftingSystemTester.Components.Crafting
 			//					PuzzleBoardGrid2D.DataCells.Values.ToList()[tempindex].LinkedDataCell = null;
 			//					puzzlePiece.InternalCells[i].LinkedGridCell = null;
 			//					PuzzleBoardGrid2D.DataCells.Values.ToList()[tempindex].ResetColorEdges();
-			//#if EE_DEBUG
+			//#if Crafting_EE_Debug
 			//					System.Diagnostics.Debug.WriteLine("DELETED GRIDCELL'S LINKED PUZZLE PIECE CELL DATA.");
 			//#endif
 			//				}
@@ -1224,7 +1221,7 @@ namespace CraftingSystemTester.Components.Crafting
 				_Stability_ProgressBar.CurrentVal = (int)(_Stability_ProgressBar.MaxVal * (1 - Math.Abs(((totalNonHomogenousConnections_S.GetConnectionSum() * 5) - (totalHomogenousConnections_S.GetConnectionSum() * 2))) / 100.0f));
 			else _Stability_ProgressBar.CurrentVal = _Stability_ProgressBar.MaxVal;
 
-#if EE_DEBUG
+#if Crafting_EE_Debug
 			//I wanna see the data!
 			System.Diagnostics.Trace.WriteLine(totalMagicTypeCounts_S.ToString());
 			System.Diagnostics.Trace.WriteLine(totalHomogenousConnections_S.ToString());
@@ -1277,7 +1274,7 @@ namespace CraftingSystemTester.Components.Crafting
 			//Rotate to the Right/CW
 			if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E))
 			{
-#if EE_DEBUG
+#if Crafting_EE_Debug
 				DebugTextblock_TextBind = "Rotate request Received [CW]";
 #endif
 
@@ -1310,7 +1307,7 @@ namespace CraftingSystemTester.Components.Crafting
 			//Rotate to the left/CCW
 			else if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q))
 			{
-#if EE_DEBUG
+#if Crafting_EE_Debug
 				DebugTextblock_TextBind = "Rotate request Received [CCW]";
 #endif
 
@@ -1359,7 +1356,7 @@ namespace CraftingSystemTester.Components.Crafting
 //				catch(Exception ex)
 //				{
 //					Console.WriteLine(ex.Message);
-//#if EE_DEBUG
+//#if Crafting_EE_Debug
 //					DebugTextblock_TextBind = "Tried To place Piece, BUT it off the grid...";
 //#endif
 //					return false;
@@ -1367,7 +1364,7 @@ namespace CraftingSystemTester.Components.Crafting
 
 //				if (retLL == null)
 //				{
-//#if EE_DEBUG
+//#if Crafting_EE_Debug
 //					DebugTextblock_TextBind = "Tried To place Piece, but it is overlapping another piece.";
 //					return false; //we failed... do not place.
 //#endif
@@ -1474,7 +1471,7 @@ namespace CraftingSystemTester.Components.Crafting
 			//					CurrentSelectedPuzzlePiece.ResetToSpawnPosition();
 			//					CurrentlyClonedPuzzlePiece = null;
 
-			//#if EE_DEBUG
+			//#if Crafting_EE_Debug
 			//					DebugTextblock_TextBind = String.Format("Let Go of current selected piece (while moving)");
 			//#endif
 			//					this.CurrentlyClonedPuzzlePiece = null;
@@ -1509,7 +1506,7 @@ namespace CraftingSystemTester.Components.Crafting
 			//					this.CurrentlyClonedPuzzlePiece = null;
 			//					this.CurrentSelectedPuzzlePiece = null;
 
-			//#if EE_DEBUG
+			//#if Crafting_EE_Debug
 			//					DebugTextblock_TextBind = String.Format("Location On puzzle piece was reset");
 			//#endif
 			//					return true;  // cancel request finished, and piece is reset.
@@ -1524,7 +1521,7 @@ namespace CraftingSystemTester.Components.Crafting
 		}
 
 		//DEBUG.
-#if EE_DEBUG
+#if Crafting_EE_Debug
 		private void OnDebugRequest(MouseState mouseState, MouseState prevMouseState)
 		{
 			if (mouseState.MiddleButton == ButtonState.Pressed && prevMouseState.MiddleButton == ButtonState.Released)
@@ -1686,7 +1683,7 @@ namespace CraftingSystemTester.Components.Crafting
 			//END OF Elemental Effects section
 
 
-#if EE_DEBUG
+#if Crafting_EE_Debug
 			//Debug Textblock
 			_debugGameTextBlock = new GameTextBlock("debugTB", 10, _resolutionHeight - 20, _resolutionWidth, 40, 1, false, 
 			0, 0, DebugTextblock_TextBind, 0, "#00000000", "", _spriteFont, null, Color.Red){bIsActive =  true};
@@ -1720,7 +1717,7 @@ namespace CraftingSystemTester.Components.Crafting
 			//Handle the Puzzle piece cell events OFF THE GRID
 			if(!retEvent)
 			{
-				// CraftingSystemTester.DebugOutToConsole("Non Grid Mouse events");
+				// CraftingMinigame.DebugOutToConsole("Non Grid Mouse events");
 				UpdateHandler_SelectedPiece(prevMouseState, preKeyboardState);
 			}
 
@@ -1738,7 +1735,7 @@ namespace CraftingSystemTester.Components.Crafting
 #endregion
 
 
-#if EE_DEBUG
+#if Crafting_EE_Debug
 			_debugGameTextBlock.Text = DebugTextblock_TextBind;
 			_debugGameTextBlock.Update(gameTime);
 #endif
@@ -1798,15 +1795,18 @@ namespace CraftingSystemTester.Components.Crafting
 
 
 			spriteBatch.End();
-
-
-			
-
 		}
 
-#endregion
+		#endregion
 
-#endregion
+		#endregion
+
+		public static void DebugOutToConsole(String s)
+		{
+#if Crafting_Crafting_EE_Debug
+			Console.WriteLine(s);
+#endif
+		}
 
 	}
 }

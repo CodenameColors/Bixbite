@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BixBite.Combat;
-using BixBite.Crafting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace CraftingSystemTester.Components.Crafting.HexGrid
+namespace BixBite.Crafting.HexGrid
 {
 	public class HexGrid2D
 	{
@@ -403,14 +399,14 @@ namespace CraftingSystemTester.Components.Crafting.HexGrid
 		public void AddPuzzlePieceOnGrid(KeyValuePair<PuzzlePiece, PuzzlePiece> puzzlePiecePair, LinkedList<Tuple<PuzzlePieceHexCell, HexCell>> gridCells, Vector2 xySnapPos)
 		{
 
-			CraftingSystemTester.DebugOutToConsole(String.Format("Adding Puzzle piece to the grid!"));
+			CraftingMinigame.DebugOutToConsole(String.Format("Adding Puzzle piece to the grid!"));
 			//CurrentPuzzlePieces
 			LinkedListNode<Tuple<PuzzlePieceHexCell, HexCell>> v = gridCells.First;
 
-			CraftingSystemTester.DebugOutToConsole(String.Format("\t  Looping through all original puzzle piece hex cells."));
+			CraftingMinigame.DebugOutToConsole(String.Format("\t  Looping through all original puzzle piece hex cells."));
 			while (v != null)
 			{
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Linking the data, and grid cells of the original puzzle piece. Hex Cell = {1} from PP_Name ={0} == Grid Cell [{2}, {3}]",
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Linking the data, and grid cells of the original puzzle piece. Hex Cell = {1} from PP_Name ={0} == Grid Cell [{2}, {3}]",
 					puzzlePiecePair.Key.Name, v.Value.Item1.GetGameTextbox().Text, v.Value.Item2.Row, v.Value.Item2.Column));
 				
 				// Link the Puzzle Piece cells to the Hex Grid cells so we can move/Remove pieces
@@ -497,7 +493,7 @@ namespace CraftingSystemTester.Components.Crafting.HexGrid
 						if (CraftingMinigame.Instance.CurrentSelectedPuzzlePiecePair.Value != null)
 						{
 							// Get out we need to check for correct placement location first
-							CraftingSystemTester.DebugOutToConsole("Clicked on the Grid, with a cloned piece, OVER a linked piece. So exit grid removal");
+							CraftingMinigame.DebugOutToConsole("Clicked on the Grid, with a cloned piece, OVER a linked piece. So exit grid removal");
 							return false;
 						}
 
@@ -561,13 +557,13 @@ namespace CraftingSystemTester.Components.Crafting.HexGrid
 					//we are clicking on a puzzle piece that is already on the hex grid.
 					else if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
 					{
-						CraftingSystemTester.DebugOutToConsole("Left Click on Piece on grid");
+						CraftingMinigame.DebugOutToConsole("Left Click on Piece on grid");
 
 						// Are we holding a piece already?
 						if (CraftingMinigame.Instance.CurrentSelectedPuzzlePiecePair.Value != null)
 						{
 							// Get out we need to check for correct placement location first
-							CraftingSystemTester.DebugOutToConsole("Clicked on the Grid, with a cloned piece, OVER a linked piece. So exit grid transfer");
+							CraftingMinigame.DebugOutToConsole("Clicked on the Grid, with a cloned piece, OVER a linked piece. So exit grid transfer");
 							return false;
 						}
 

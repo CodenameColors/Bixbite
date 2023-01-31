@@ -1,21 +1,15 @@
 ﻿
 #define EE_DEBUG
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Schema;
 using BixBite.Combat;
-using BixBite.Crafting;
-using CraftingSystemTester.Components.Crafting.HexGrid;
+using BixBite.Crafting.HexGrid;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace CraftingSystemTester.Components.Crafting
+namespace BixBite.Crafting
 {
 	public partial class PuzzlePiece
 	{
@@ -226,7 +220,7 @@ namespace CraftingSystemTester.Components.Crafting
 		/// <param name="toCopy"></param>
 		public PuzzlePiece(String name, PuzzlePiece toCopy, float sx, float sy, SpriteFont sf, List<PuzzlePieceHexCell> internalCells = null)
 		{
-			CraftingSystemTester.DebugOutToConsole(String.Format("\t  Creating new Puzzle piece"));
+			CraftingMinigame.DebugOutToConsole(String.Format("\t  Creating new Puzzle piece"));
 
 			this.Name = name;
 
@@ -501,7 +495,7 @@ namespace CraftingSystemTester.Components.Crafting
 
 		public void SetSelectedHexCellRef(PuzzlePieceHexCell puzzlePieceCellRef)
 		{
-			CraftingSystemTester.DebugOutToConsole(String.Format("\t  Set the selected cell of the current puzzle piece."));
+			CraftingMinigame.DebugOutToConsole(String.Format("\t  Set the selected cell of the current puzzle piece."));
 
 			SelectedIndex =  puzzlePieceCellRef.GetPuzzlePieceParent().InternalCells.FindIndex(x => x == puzzlePieceCellRef);
 		}
@@ -517,9 +511,9 @@ namespace CraftingSystemTester.Components.Crafting
 			if (mouseState.LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released)
 			{
 				//Logging
-				CraftingSystemTester.DebugOutToConsole(String.Format("Clicked on a puzzle piece!! STARTING EVENT CALLBACK. NAME = {0}", this.Name));
+				CraftingMinigame.DebugOutToConsole(String.Format("Clicked on a puzzle piece!! STARTING EVENT CALLBACK. NAME = {0}", this.Name));
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t Left click detected"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t Left click detected"));
 
 				// So if the player is clicking left click. They are trying to pick up a piece. So we need to determine if the piece is on the grid first
 				//this._xoffset = 0 - (reference.XPos + reference.Width / 2);
@@ -529,13 +523,13 @@ namespace CraftingSystemTester.Components.Crafting
 					//What type of input is the play exhibiting as they hover over the hex cell.
 					if (CraftingMinigame.Instance.CurrentSelectedPuzzlePiecePair.Key == null)
 					{
-						global::CraftingSystemTester.CraftingSystemTester.DebugOutToConsole(
+						CraftingMinigame.DebugOutToConsole(
 							String.Format("On puzzle piece click ERROR!!! CurrentSelected Key pair is NULL!?!"));
 						return;
 					}
 
 
-					CraftingSystemTester.DebugOutToConsole(String.Format("\t The piece is already on the grid So reset it's active status to allow for pick up"));
+					CraftingMinigame.DebugOutToConsole(String.Format("\t The piece is already on the grid So reset it's active status to allow for pick up"));
 					//If it's on the grid let's just use that reference in the crafting system to re allow movement and placement.
 					//CraftingMinigame.Instance.CurrentlyClonedPuzzlePiece = this;
 					//CraftingMinigame.Instance.CurrentSelectedPuzzlePiecePair 
@@ -547,13 +541,13 @@ namespace CraftingSystemTester.Components.Crafting
 
 					SetSelectedHexCellRef(reference);
 
-					CraftingSystemTester.DebugOutToConsole(String.Format("END OF ON CLICK PUZZLE PIECE CALLBACK. NAME = {0}", this.Name));
+					CraftingMinigame.DebugOutToConsole(String.Format("END OF ON CLICK PUZZLE PIECE CALLBACK. NAME = {0}", this.Name));
 					return;
 
 				}
 				else
 				{
-					CraftingSystemTester.DebugOutToConsole(String.Format("\t The puzzle piece is NOT on the grid. So we need to clone the puzzle piece for movement player movement"));
+					CraftingMinigame.DebugOutToConsole(String.Format("\t The puzzle piece is NOT on the grid. So we need to clone the puzzle piece for movement player movement"));
 
 					//If it's not on the grid then we need to create a clone of the the current puzzle piece in question.
 					SetSelectedHexCellRef(reference);
@@ -573,21 +567,21 @@ namespace CraftingSystemTester.Components.Crafting
 					//CraftingMinigame.Instance.CurrentSelectedPuzzlePiecePair.Key.YOffset += (int)((reference.Height / this.ScaleY) -
 					//	CraftingMinigame.Instance.CurrentSelectedPuzzlePiecePair.Key.YOffset % (reference.Height / this.ScaleY));
 
-					CraftingSystemTester.DebugOutToConsole(String.Format("END OF ON CLICK PUZZLE PIECE CALLBACK. NAME = {0}", this.Name));
+					CraftingMinigame.DebugOutToConsole(String.Format("END OF ON CLICK PUZZLE PIECE CALLBACK. NAME = {0}", this.Name));
 					return;
 
 				}
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("END OF ON CLICK PUZZLE PIECE CALLBACK. NAME = {0}", this.Name));
+				CraftingMinigame.DebugOutToConsole(String.Format("END OF ON CLICK PUZZLE PIECE CALLBACK. NAME = {0}", this.Name));
 			}
 			else if (mouseState.RightButton == ButtonState.Pressed && _prevMouseState.RightButton == ButtonState.Released)
 			{
 				//Reset the piece.
 
 				//Logging
-				CraftingSystemTester.DebugOutToConsole(String.Format("Clicked on a puzzle piece!! STARTING EVENT CALLBACK. NAME = {0}", this.Name));
+				CraftingMinigame.DebugOutToConsole(String.Format("Clicked on a puzzle piece!! STARTING EVENT CALLBACK. NAME = {0}", this.Name));
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t Right click detected"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t Right click detected"));
 				if (this.bIsOnGrid)
 				{
 				}
@@ -605,14 +599,14 @@ namespace CraftingSystemTester.Components.Crafting
 				this._bIsSelectable = true;
 				this._bIsActive = true;
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("END OF ON CLICK PUZZLE PIECE CALLBACK. NAME = {0}", this.Name));
+				CraftingMinigame.DebugOutToConsole(String.Format("END OF ON CLICK PUZZLE PIECE CALLBACK. NAME = {0}", this.Name));
 			}
 			else
 			{
 				//This is just hovering over the cells.
 				if (reference.Row >= 0 && reference.Column >= 0)
 				{
-					CraftingSystemTester.DebugOutToConsole(String.Format("Hovering over grid cell [{0},{1}]", reference.Row, reference.Column));
+					CraftingMinigame.DebugOutToConsole(String.Format("Hovering over grid cell [{0},{1}]", reference.Row, reference.Column));
 				}
 			}
 

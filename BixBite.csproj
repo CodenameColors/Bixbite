@@ -83,6 +83,12 @@
     <Compile Include="Combat\PhysicalSkill.cs" />
     <Compile Include="Combat\Skill.cs" />
     <Compile Include="Crafting\CraftingHelpers.cs" />
+    <Compile Include="Crafting\CraftingMinigame.cs" />
+    <Compile Include="Crafting\HexGrid\HexCell.cs" />
+    <Compile Include="Crafting\HexGrid\HexGrid2D.cs" />
+    <Compile Include="Crafting\HexGrid\PuzzlePieceHexCell.cs" />
+    <Compile Include="Crafting\PuzzlePiece.cs" />
+    <Compile Include="Crafting\PuzzlePieceCreationHelper.cs" />
     <Compile Include="Crafting\Recipe.cs" />
     <Compile Include="DialogueScene.cs" />
     <Compile Include="Effects\ImageEffect.cs" />
@@ -99,6 +105,7 @@
     <Compile Include="Rendering\Animation\LayeredSpriteSheet.cs" />
     <Compile Include="Rendering\Animation\SpriteAnimation.cs" />
     <Compile Include="Rendering\Animation\SpriteSheet.cs" />
+    <Compile Include="Rendering\Helpers\CircleUtillties.cs" />
     <Compile Include="Rendering\Helpers\RectangleUtilities.cs" />
     <Compile Include="Rendering\UI\BaseUI.cs" />
     <Compile Include="Rendering\UI\BaseUIComponent.cs" />

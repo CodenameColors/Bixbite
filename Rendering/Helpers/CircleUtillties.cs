@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ProjectileTester.Components.Utillties
+namespace BixBite.Rendering.Helpers
 {
 	public static partial class Utilities
 	{

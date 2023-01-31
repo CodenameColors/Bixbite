@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BixBite.Combat;
-using CraftingSystemTester.Components.Crafting.HexGrid;
+using BixBite.Crafting.HexGrid;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace CraftingSystemTester.Components.Crafting
+namespace BixBite.Crafting
 {
 	/// <summary>
 	/// This class holds ALL the puzzle piece creation code.
@@ -33,7 +30,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "0"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "0"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -160,7 +157,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "1"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "1"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -205,7 +202,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "2"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "2"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -268,7 +265,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "3"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "3"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -359,7 +356,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "4"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "4"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -460,7 +457,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "5"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "5"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -533,7 +530,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "6"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "6"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -614,7 +611,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "7"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "7"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -677,7 +674,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "8"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "8"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -786,7 +783,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "9"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "9"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -969,7 +966,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "10"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "10"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -1126,7 +1123,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "11"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "11"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -1235,7 +1232,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "12"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "12"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -1380,7 +1377,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "13"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "13"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -1479,7 +1476,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "14"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "14"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -1624,7 +1621,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "15"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "15"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -1815,7 +1812,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "16"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "16"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -2050,7 +2047,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "17"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "17"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -2215,7 +2212,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "18"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "18"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -2370,7 +2367,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "19"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "19"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -2561,7 +2558,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "20"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "20"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -2752,7 +2749,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "21"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "21"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -2989,7 +2986,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "22"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "22"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -3200,7 +3197,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "23"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "23"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -3281,7 +3278,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "24"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "24"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -3380,7 +3377,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "25"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "25"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -3553,7 +3550,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "26"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "26"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -3634,7 +3631,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "27"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "27"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -3751,7 +3748,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "28"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "28"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -3968,7 +3965,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "29"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "29"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -4277,7 +4274,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "30"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "30"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -4502,7 +4499,7 @@ namespace CraftingSystemTester.Components.Crafting
 			{
 				#region create the hex cells
 
-				CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "31"));
+				CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Creating piece {0} for the first time!", "31"));
 				InternalCells.Add(new PuzzlePieceHexCell(
 						this, 0, 0.0f * ScaleX, 0.0f * ScaleY, _cellWidth, _cellHeight, null,
 						null, fillTexture, fillTexture, spriteFont)
@@ -4838,7 +4835,7 @@ namespace CraftingSystemTester.Components.Crafting
 		public void CreatePuzzlePiece(int desiredPiece, Texture2D fillTexture, EMagicType desiredMagicType,
 			float homogenousPercent = 1.0f, List<PuzzlePieceHexCell> interncell = null)
 		{
-			CraftingSystemTester.DebugOutToConsole(String.Format("\t\t  Create hex cells needed for this puzzle piece"));
+			CraftingMinigame.DebugOutToConsole(String.Format("\t\t  Create hex cells needed for this puzzle piece"));
 			//We need a color
 			Color fillColor = CraftingMinigame.GetMagicColor(desiredMagicType);
 			int maxHexCells = 0;
