@@ -58,7 +58,7 @@ namespace BixBite.NodeEditor
 	public abstract partial class BaseNodeBlock :/* System.Windows.Controls.Button,*/ INotifyPropertyChanged, IStateMachineTraversal
 	{
 		public String Header { get; set; }
-		public String Name { get; set; }
+		public new String Name { get; set; }
 		public String NewValue_Constant { get; set; }
 
 		public double LocX = 0.0;
@@ -89,7 +89,7 @@ namespace BixBite.NodeEditor
 		}
 
 		private ECOnnectionType dtype;
-		public ECOnnectionType DType
+		public new ECOnnectionType DType
 		{
 			get { return dtype; }
 			set

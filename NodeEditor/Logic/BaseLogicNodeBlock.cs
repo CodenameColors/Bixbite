@@ -38,7 +38,7 @@ namespace BixBite.NodeEditor.Logic
 
 
 		private ECOnnectionType dtype;
-		public ECOnnectionType DType
+		public new ECOnnectionType DType
 		{
 			get { return dtype; }
 			set
@@ -51,9 +51,9 @@ namespace BixBite.NodeEditor.Logic
 
 		private bool newvalconnected;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public override event PropertyChangedEventHandler PropertyChanged;
 
-		public bool NewValConnected
+		public new bool NewValConnected
 		{
 			get { return newvalconnected; }
 			set

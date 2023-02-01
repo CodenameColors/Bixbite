@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using BixBite.NodeEditor.Logic;
+using BixBite.NodeEditor;
 using BixBite.Resources;
 
 namespace BixBite.NodeEditor

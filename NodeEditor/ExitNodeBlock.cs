@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BixBite.NodeEditor.Logic;
-using Microsoft.Xna.Framework;
 
 namespace BixBite.NodeEditor
 {

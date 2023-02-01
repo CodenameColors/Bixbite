@@ -37,7 +37,7 @@ namespace BixBite.NodeEditor.Arithmetic
 		}
 
 		private ECOnnectionType dtype;
-		public ECOnnectionType DType
+		public new ECOnnectionType DType
 		{
 			get { return dtype; }
 			set
@@ -48,7 +48,7 @@ namespace BixBite.NodeEditor.Arithmetic
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public override event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
 		/// Base constructor for XAML PTR

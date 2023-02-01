@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Shapes;
 
 namespace BixBite.NodeEditor
 {
@@ -16,13 +15,12 @@ namespace BixBite.NodeEditor
 
 	public partial class ConnectionNode // : Button
 	{
-		public String Name { get; set; }
+		public new String Name { get; set; }
 
 		public List<ConnectionNode> ConnectedNodes = new List<ConnectionNode>();
-		//public Point NodeLocation;
 		public int PositionX;
 		public int PositionY;
-		public List<Path> Curves = new List<Path>();
+		//public List<Path> Curves = new List<Path>();
 		public ECOnnectionType NodeType;
 		public BaseNodeBlock ParentBlock = null;
 
@@ -33,7 +31,6 @@ namespace BixBite.NodeEditor
 			this.Name = Name;
 			this.PositionX = xPos;
 			this.PositionY = yPos;
-			//this.NodeLocation = p;
 			this.NodeType = nodetype;
 		}
 
