@@ -172,6 +172,9 @@
     <Compile Include="SceneObject\Spawner.cs" />
     <Compile Include="SceneObject\Transistion.cs" />
     <Compile Include="TileCollisionChecker.cs" />
+    <Compile Include="TimelinePlayer\ChoiceTimeBlock.cs" />
+    <Compile Include="TimelinePlayer\TimeBlock.cs" />
+    <Compile Include="TimelinePlayer\Timeline.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SQLite.Interop.dll">
