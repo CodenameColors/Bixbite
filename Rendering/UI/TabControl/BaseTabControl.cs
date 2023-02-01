@@ -16,7 +16,11 @@ namespace BixBite.Rendering.UI.TabControl
 		#endregion
 
 		#region Properties
-		public int SelectedTabIndex{ get; set; }
+		public int SelectedTabIndex
+		{
+			get => _selectedTabIndex;
+			set => _selectedTabIndex = value;
+		}
 
 		public int XOffset
 		{

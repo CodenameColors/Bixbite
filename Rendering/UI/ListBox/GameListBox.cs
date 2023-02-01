@@ -102,8 +102,8 @@ namespace BixBite.Rendering.UI.ListBox
 		public GameListBox(string UIName, int xPos, int yPos, int width, int height, int zindex, bool border, int borderW, Color borderColor,
 			int xOff, int yOff, int innerW, int InnerH, int innerSpacing, int maxDisplayedItems, int holdFrameLimit,
 			Keys Inc, Keys Dec, Keys PageInc, Keys PageDec, Keys Select, Keys back, GraphicsDevice graphicsDevice,
-			Texture2D borderTexture = null, Texture2D highlightedTexture = null, 
-			EPositionType positionType = EPositionType.Vertical) 
+			Texture2D borderTexture = null, Texture2D highlightedTexture = null,
+			EPositionType positionType = EPositionType.Vertical)
 			: base(UIName, xPos, yPos, width, height, zindex, border, borderW, innerSpacing, xOff, yOff, innerW, InnerH, maxDisplayedItems, positionType)
 		{
 			this.IncrementKey = Inc;
@@ -131,11 +131,6 @@ namespace BixBite.Rendering.UI.ListBox
 		#endregion
 
 		#region Methods
-
-		public void SetActiveStatus(bool state)
-		{
-			this.bIsActive = state;
-		}
 
 		public void SetBorder(int borderwidth, Color color)
 		{
@@ -178,7 +173,7 @@ namespace BixBite.Rendering.UI.ListBox
 				int currentpos = (int)startpos.Y;
 				for (int i = 0; i < Items.Count; i++)
 				{
-					(Items[i] as ListBoxItems.GameListBoxItem).XPos = (int)startpos.X; 
+					(Items[i] as ListBoxItems.GameListBoxItem).XPos = (int)startpos.X;
 					(Items[i] as ListBoxItems.GameListBoxItem).YPos = (int)currentpos + InnerHeight + _spacing;
 					//Add the initial Objects Origin
 					(Items[i] as ListBoxItems.GameListBoxItem).XPos += (int)this.Position.X;
@@ -262,7 +257,7 @@ namespace BixBite.Rendering.UI.ListBox
 			//SelectedIndex += MaxDisplayedItems;
 			if (SelectedIndex + MaxDisplayedItems > Items.Count - 1)
 			{
-				SelectedIndex = Items.Count-1;
+				SelectedIndex = Items.Count - 1;
 				_SelectedDisplayedIndex = MaxDisplayedItems - 1;
 			}
 			else SelectedIndex += MaxDisplayedItems;
@@ -306,7 +301,7 @@ namespace BixBite.Rendering.UI.ListBox
 			{
 				_SelectedDisplayedIndex = 0;
 				SelectedIndex = 0;
-				
+
 			}
 			//Just move it normally
 			else
@@ -333,7 +328,7 @@ namespace BixBite.Rendering.UI.ListBox
 
 			}
 
-		
+
 
 			//CHANGING DISPLAYED DATA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		}
@@ -531,7 +526,7 @@ namespace BixBite.Rendering.UI.ListBox
 
 				if (IsIncrementThroughList(IncrementKey, PageIncrementKey))
 				{
-					
+
 				}
 				else if (IsDecrementThroughList(DecrementKey, PageDecrementKey))
 				{
@@ -546,7 +541,7 @@ namespace BixBite.Rendering.UI.ListBox
 
 				}
 
-				
+
 				// why... past me... fucking why...
 				// This calculates the limit so we don't update list box items off the screen.
 				int limit = (Items.Count < MaxDisplayedItems
@@ -580,7 +575,7 @@ namespace BixBite.Rendering.UI.ListBox
 					: MaxDisplayedItems));
 			for (int i = 0; i < limit; i++)
 			{
-				if((Items[i + _listBoxRenderPointer] is ListBoxItems.GameListBoxItem listItem))
+				if ((Items[i + _listBoxRenderPointer] is ListBoxItems.GameListBoxItem listItem))
 					listItem?.Draw(gameTime, spriteBatch);
 				if ((Items[i + _listBoxRenderPointer] is ListBoxItems.GameListBoxItemSelectable selectableListItem))
 					selectableListItem?.Draw(gameTime, spriteBatch);
@@ -592,6 +587,7 @@ namespace BixBite.Rendering.UI.ListBox
 
 		}
 		#endregion
+
 
 	}
 }
