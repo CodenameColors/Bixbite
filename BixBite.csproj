@@ -65,8 +65,14 @@
     <Compile Include="Characters\NPC.cs" />
     <Compile Include="Characters\PartyMember.cs" />
     <Compile Include="Characters\Player.cs" />
+    <Compile Include="Combat\CombatActions.cs" />
+    <Compile Include="Combat\CombatDelegates\FollowUpAttacksDelegates.cs" />
+    <Compile Include="Combat\CombatDelegates\ItemDelegates.cs" />
+    <Compile Include="Combat\CombatDelegates\ModifierDelegates.cs" />
+    <Compile Include="Combat\CombatDelegates\SkillDelegates.cs" />
     <Compile Include="Combat\CombatEnums.cs" />
     <Compile Include="Combat\CombatHelpers.cs" />
+    <Compile Include="Combat\CombatSystem.cs" />
     <Compile Include="Combat\Equipables\Accessory.cs" />
     <Compile Include="Combat\Equipables\Clothes.cs" />
     <Compile Include="Combat\Equipables\Equipable.cs" />

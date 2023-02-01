@@ -3455,7 +3455,7 @@ EventSkipOver:
 			}
 			TurnQueue_GameListBox.ResetSelected();
 
-		}
+		} 
 
 		public void LoadInPartyMember(String Name, PartyMember pm)
 		{
