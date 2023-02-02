@@ -1,16 +1,11 @@
-﻿
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BixBite;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using BixBite.Rendering;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace ProjectE_E.Components
+namespace BixBite.Rendering
 {
 	public class Map
 	{

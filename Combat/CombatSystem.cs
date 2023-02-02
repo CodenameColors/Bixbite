@@ -9,6 +9,7 @@ using System.Threading;
 using BixBite.Characters;
 using BixBite.Items;
 using BixBite.Particles;
+using BixBite.Rendering;
 using BixBite.Rendering.UI;
 using BixBite.Rendering.UI.ListBox;
 using BixBite.Rendering.UI.ListBox.ListBoxItems;
@@ -255,7 +256,7 @@ namespace BixBite.Combat
 
 		//UI
 		private GameListBox TurnQueue_GameListBox;
-		private List<UIComponent> _uiComponents;
+		private List<BaseUI> _uiComponents;
 
 		private Dictionary<String, GameListBox> _partyMemberSkillListBoxes_dict = new Dictionary<string, GameListBox>();
 		private Dictionary<String, GameListBox> _partyMemberItemsListBoxes_dict = new Dictionary<string, GameListBox>();
@@ -331,7 +332,6 @@ namespace BixBite.Combat
 		private int DefaultInterlopation = 10;
 		private int PlayerMenuIndex = 0;
 
-		private static Lazy<CombatSystem> combatSystem = new Lazy<CombatSystem>(() => new CombatSystem());
 		public EBattleCommand CommandRequest = EBattleCommand.NONE;
 		private ECombatState pastCombatState;
 
@@ -377,10 +377,8 @@ namespace BixBite.Combat
 
 		public BattleEntity CurrentTurnCharacter = new BattleEntity();
 
-		public static CombatSystem Instance
-		{
-			get => combatSystem.Value;
-		}
+		private static Lazy<CombatSystem> combatSystem = new Lazy<CombatSystem>(() => new CombatSystem());
+		public static CombatSystem Instance => combatSystem.Value;
 
 		private bool bMovementInProgress = false;
 
@@ -390,67 +388,73 @@ namespace BixBite.Combat
 
 		public BixBite.Rendering.UI.ProgressBar.GameCustomProgressBar PartyMemberEssenceBar;
 
-		public CombatSystem()
+		//public CombatSystem()
+		//{
+
+		//}
+
+		public void LoadContent(ContentManager content)
 		{
+			ContentRef = content;
+
 			//Set the keyboard settings for use.
-			LeftKey = Properties.Settings.Default.Left;
-			RightKey = Properties.Settings.Default.Right;
-			UpKey = Properties.Settings.Default.Up;
-			DownKey = Properties.Settings.Default.Down;
+			LeftKey = Keys.A; // Properties.Settings.Default.Left;
+			RightKey = Keys.D; //Properties.Settings.Default.Right;
+			UpKey = Keys.W; //Properties.Settings.Default.Up;
+			DownKey = Keys.S; //Properties.Settings.Default.Down;
 
-			AttackKey = Properties.Settings.Default.Attack;
-			SkillKey = Properties.Settings.Default.Skills;
-			DefenseKey = Properties.Settings.Default.Defense;
-			ItemKey = Properties.Settings.Default.Items;
+			AttackKey = Keys.D1; //Properties.Settings.Default.Attack;
+			SkillKey = Keys.D2; //Properties.Settings.Default.Skills;
+			DefenseKey = Keys.D3; //Properties.Settings.Default.Defense;
+			ItemKey = Keys.I; //Properties.Settings.Default.Items;
 
-			EssenceDownKey = Properties.Settings.Default.EssenceDown;
-			EssenceUpKey = Properties.Settings.Default.EssenceUp;
-			EssenceLeftKey = Properties.Settings.Default.EssenceLeft;
-			EssenceRightKey = Properties.Settings.Default.EssenceRight;
+			EssenceDownKey = Keys.F; //Properties.Settings.Default.EssenceDown;
+			EssenceUpKey = Keys.R; //Properties.Settings.Default.EssenceUp;
+			EssenceLeftKey = Keys.Z; //Properties.Settings.Default.EssenceLeft;
+			EssenceRightKey = Keys.C; //Properties.Settings.Default.EssenceRight;
 
-			StanceLeftKey = Properties.Settings.Default.StanceLeft;
-			StanceRightKey = Properties.Settings.Default.StanceRight;
+			StanceLeftKey = Keys.Q; //Properties.Settings.Default.StanceLeft;
+			StanceRightKey = Keys.E; //Properties.Settings.Default.StanceRight;
 
-			BackKey = Properties.Settings.Default.Back;
-			SelectKey = Properties.Settings.Default.Select;
+			BackKey = Keys.Tab; //Properties.Settings.Default.Back;
+			SelectKey = Keys.Space; //Properties.Settings.Default.Select;
 
-			CBMenuSelect1 = Properties.Settings.Default.CBMenuSelect1;
-			CBMenuSelect2 = Properties.Settings.Default.CBMenuSelect2;
-			CBMenuSelect3 = Properties.Settings.Default.CBMenuSelect3;
-			CBMenuSelect4 = Properties.Settings.Default.CBMenuSelect4;
-			CBMenuSelect5 = Properties.Settings.Default.CBMenuSelect5;
-			CBMenuSelect6 = Properties.Settings.Default.CBMenuSelect6;
+			CBMenuSelect1 = Keys.D1; //Properties.Settings.Default.CBMenuSelect1;
+			CBMenuSelect2 = Keys.D2; //Properties.Settings.Default.CBMenuSelect2;
+			CBMenuSelect3 = Keys.D3; //Properties.Settings.Default.CBMenuSelect3;
+			CBMenuSelect4 = Keys.D4; //Properties.Settings.Default.CBMenuSelect4;
+			CBMenuSelect5 = Keys.D5; //Properties.Settings.Default.CBMenuSelect5;
+			CBMenuSelect6 = Keys.D6; //Properties.Settings.Default.CBMenuSelect6;
 
 			//DEBUG TEXTBLOCK
-			var tbtest = new GameTextBlock("LogTextblock", 0, 00, 0, 0, 1, "#00000000", "testing");
+			GameTextBlock tbtest = new GameTextBlock("LogTextblock", 20, 1080 - 120, 0, 0, 1, false, 0, 0, "testing",
+				0.0f, "", "", Font, null, Color.White);
 
 			debug_LogBlock = (tbtest);
-			((GameTextBlock)debug_LogBlock).Position = new Vector2(20, 1080 - 120);
-			((GameTextBlock)debug_LogBlock).PenColour = Color.White;
 
 			//Stance TEXTBLOCK
-			var stancetb = new GameTextBlock("StanceTextBlock", 160, 40, 0, 0, 0, "#00000000", "[PUTSTANCENAMEHERE]");
+			GameTextBlock stancetb = new GameTextBlock("StanceTextBlock", 160, 40, 0, 0, 0, false, 0, 0, "[PUTSTANCENAMEHERE]",
+				0.0f, "", "", Font, null, Color.White);
 
 			Stance_GTB = (stancetb);
-			((GameTextBlock)Stance_GTB).Position = new Vector2(20, 20);
-			((GameTextBlock)Stance_GTB).PenColour = Color.White;
+			//((GameTextBlock)Stance_GTB).Position = new Vector2(20, 20);
 			Stance_GTB.bMiddleHorizontal = true;
 			Stance_GTB.bMiddleVertical = true;
 
 
 			//weapon TEXTBLOCK
-			var weapontb = new GameTextBlock("WeaponTextBlock", 160, 40, 0, 0, 1, "#00000000", "[PUTWEAPONNAMEHERE]");
+			GameTextBlock weapontb = new GameTextBlock("WeaponTextBlock", 160, 40, 0, 0, 1, false, 0, 0, "[PUTWEAPONNAMEHERE]",
+				0.0f, "", "", Font, null, Color.White);
 
 			Weapon_GTB = (weapontb);
-			((GameTextBlock)Weapon_GTB).Position = new Vector2(20, 20);
-			((GameTextBlock)Weapon_GTB).PenColour = Color.White;
 			Weapon_GTB.bMiddleHorizontal = true;
 			Weapon_GTB.bMiddleVertical = true;
 
 			//Turn Queue
-			TurnQueue_GameListBox = new GameListBox("Turn_Queue_LB", 10,10, 1920 - 100 - 600, 100, 100,100, 10, Keys.None, Keys.None, Keys.None, Keys.None, Keys.None, Keys.None, 
-				10, false, EPositionType.Horizontal);
-
+			TurnQueue_GameListBox = new GameListBox("Turn_Queue_LB", 10, 10, 1920 - 100 - 600, 100, 1, false, 0, Color.White,
+				10, 10, 100, 100, 10, 10, 0,
+				Keys.None, Keys.None, Keys.None, Keys.None, Keys.None, Keys.None, null,
+				ContentRef.Load<Texture2D>("Images/UI/TurnQueueBackground"), null, EPositionType.Horizontal);
 		}
 
 		public void LoadIzzysUIBindingForTest(GraphicsDevice graphicsDevice, String file1, String file2, String file3, String arrowleft, String arrowright, String inventory)
@@ -537,73 +541,6 @@ namespace BixBite.Combat
 			(CombatParticleEmitters_List[index] as HitSparkPEmitter).SetParticleTexture(particleImg);
 			(CombatParticleEmitters_List[index] as HitSparkPEmitter).SetParticleScale(scaleX, scaleY);
 			(CombatParticleEmitters_List[index] as HitSparkPEmitter).SetCycleStatus(bCycle);
-		}
-
-		//public void LoadHitSparkParticleSystem(int ScreenResWidth, int ScreenResHeight, Texture2D particleImg)
-		//{
-		//	//Explosion/Hit Spark
-		//	PEmitter pe = new PEmitter(
-		//		new Rectangle(0, 0, ScreenResWidth, ScreenResHeight),
-		//		particleImg, new Rectangle(0, 00, particleImg.Width, particleImg.Height), 10,
-		//		0, 10, false,
-		//		particleImg, (int)(particleImg.Width), (int)(particleImg.Height), 1f,
-		//		.1f, .1f,
-		//		true,
-		//		0, 0,
-		//		0, 360,
-		//		400f, 500,
-		//		100, 200, new Random()
-		//	);
-		//	CombatParticleEmitters_List.Add(pe);
-		//}
-
-		//public void LoadHitSparkParticleSystem(int ScreenResWidth, int ScreenResHeight, Texture2D particleImg, float scalex, float scaley)
-		//{
-		//	//Explosion/Hit Spark
-		//	PEmitter pe = new PEmitter(
-		//		new Rectangle(0, 0, ScreenResWidth, ScreenResHeight),
-		//		particleImg, new Rectangle(0, 00, particleImg.Width, particleImg.Height), 10,
-		//		0, 10, false,
-		//		particleImg, (int)(particleImg.Width), (int)(particleImg.Height), 1f,
-		//		scalex, scaley,
-		//		true,
-		//		0, 0,
-		//		0, 360,
-		//		400f, 500,
-		//		100, 200, new Random()
-		//	);
-		//	CombatParticleEmitters_List.Add(pe);
-		//}
-
-
-		//public void LoadCombatParticleSystem(int ScreenResWidth, int ScreenResHeight, Texture2D particleImg)
-		//{
-		//	//Explosion/Hit Spark
-		//	CombatParticleSystem = new PEmitter(
-		//		new Rectangle(0, 0, ScreenResWidth, ScreenResHeight),
-		//		particleImg, new Rectangle(0, 00, 2, 5), 10,
-		//		1, 10, false,
-		//		particleImg, (int)(particleImg.Width), (int)(particleImg.Height), 1f,
-		//		1f, 1f,
-		//		true,
-		//		0, 0,
-		//		0, 360,
-		//		100f, 200f,
-		//		200, 400, new Random()
-		//	);
-		//}
-
-
-		public void LoadDebugFont(SpriteFont sf)
-		{
-			(debug_LogBlock as GameTextBlock)._font = sf;
-			(debug_LogBlock as GameTextBlock).PenColour = Color.White;
-
-			(Stance_GTB as GameTextBlock)._font = sf;
-			(Stance_GTB as GameTextBlock).PenColour = Color.White;
-
-			(Weapon_GTB as GameTextBlock)._font = sf;
-			(Weapon_GTB as GameTextBlock).PenColour = Color.White;
 		}
 
 		public void ChangeCharacterTurn()
@@ -1111,7 +1048,7 @@ namespace BixBite.Combat
 						
 						//Get the Current Skill that we are going to use FUNCTION NAME
 						String funcname = tup.Item2.Function_PTR;
-						MethodInfo SkillMethod = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
+						MethodInfo SkillMethod = Type.GetType("BixBite.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
 						SkillMethod.Invoke(null, new object[] { this, paramList }); //Invoke this method 
 					}
 					foreach (Tuple<BattleEntity, ModifierData> tup in EntityAttackEffectModifier_List)
@@ -1124,7 +1061,7 @@ namespace BixBite.Combat
 
 						//Get the Current Skill that we are going to use FUNCTION NAME
 						String funcname = tup.Item2.Function_PTR;
-						MethodInfo SkillMethod = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
+						MethodInfo SkillMethod = Type.GetType("BixBite.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
 						SkillMethod.Invoke(null, new object[] { this, paramList }); //Invoke this method 
 					}
 
@@ -1792,7 +1729,7 @@ EventSkipOver:
 						paramList.Add(tup.Item2);
 						//Get the Current Skill that we are going to use FUNCTION NAME
 						String funcname = tup.Item2.Function_PTR;
-						MethodInfo SkillMethod = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
+						MethodInfo SkillMethod = Type.GetType("BixBite.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
 						SkillMethod.Invoke(null, new object[] { this, paramList }); //Invoke this method 
 					}
 
@@ -2003,8 +1940,11 @@ EventSkipOver:
 
 						#region Weapon Label UI
 						//Set up the testing textbox to switch on command
-						
-						Weapon_GTB.Position = WeaponLeftArrow_UI_rect.Location.ToVector2() + new Vector2(40, 20);
+
+						Vector2 WeaponLabelPos = WeaponLeftArrow_UI_rect.Location.ToVector2() + new Vector2(40, 20);
+
+						Weapon_GTB.XPos= (int)WeaponLabelPos.X;
+						Weapon_GTB.YPos= (int)WeaponLabelPos.Y;
 						Weapon_GTB.SetProperty("Width",
 							WeaponRightArrow_UI_rect.X - WeaponLeftArrow_UI_rect.X - WeaponLeftArrow_UI.Width);
 						Weapon_GTB.SetProperty("Height", 40);
@@ -2016,7 +1956,8 @@ EventSkipOver:
 						Stance_GTB.Text = CurrentPartyMember_turn.CurrentStance.Value.ToString();
 
 						Vector2 pos = StanceLeftArrow_UI_rect.Location.ToVector2() + new Vector2(StanceLeftArrow_UI.Width, 0); ;
-						Stance_GTB.Position = pos;
+						Stance_GTB.XPos = (int)pos.X;
+						Stance_GTB.YPos = (int)pos.Y;
 						Stance_GTB.SetProperty("Width", (StanceRightArrow_UI_rect.X - StanceLeftArrow_UI_rect.Location.X - StanceLeftArrow_UI.Width));
 
 						CurrentPartyMember_turn.StanceIndicator_Color = StanceToColor(CurrentPartyMember_turn.CurrentStance.Value);
@@ -2188,7 +2129,7 @@ EventSkipOver:
 							case EBattleCommand.BACK:
 								pastCombatState = ECombatState.NONE;
 								bDrawSkillMenu_UI = false;
-								_partyMemberSkillListBoxes_dict[CurrentPartyMember_turn.First_Name].SetActiveStatus(false);
+								_partyMemberSkillListBoxes_dict[CurrentPartyMember_turn.First_Name].bIsActive = false;
 
 								debug_LogBlock.Text = String.Format("LAST HIT => CBS {0} | Skill UI Back Request | Key: {1}",
 									combatState.ToString(), pressedkey.ToString());
@@ -2217,7 +2158,7 @@ EventSkipOver:
 							case EBattleCommand.BACK:
 
 								pastCombatState = ECombatState.NONE;
-								_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name].SetActiveStatus(false);
+								_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name]. bIsActive = false;
 
 								debug_LogBlock.Text = String.Format("LAST HIT => CBS {0} | Items UI Back Request | Key: {1}",
 									combatState.ToString(), pressedkey.ToString());
@@ -2303,7 +2244,7 @@ EventSkipOver:
 						//	paramList.Add(tup.Item1);
 						//	//Get the Current Skill that we are going to use FUNCTION NAME
 						//	String funcname = tup.Item2.Function_PTR;
-						//	MethodInfo SkillMethod = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
+						//	MethodInfo SkillMethod = Type.GetType("BixBite.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
 						//	SkillMethod.Invoke(null, new object[] { this, paramList }); //Invoke this method 
 						//}
 
@@ -2370,7 +2311,7 @@ EventSkipOver:
 						//	paramList.Add(tup.Item1);
 						//	//Get the Current Skill that we are going to use FUNCTION NAME
 						//	String funcname = tup.Item2.Function_PTR;
-						//	MethodInfo SkillMethod = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
+						//	MethodInfo SkillMethod = Type.GetType("BixBite.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
 						//	SkillMethod.Invoke(null, new object[] { this, paramList }); //Invoke this method 
 						//}
 
@@ -2456,7 +2397,7 @@ EventSkipOver:
 						bDrawSkillMenu_UI = true;
 
 						_partyMemberSkillListBoxes_dict[CurrentPartyMember_turn.First_Name].SetPosition(SKillsMenu_UI_pos);
-						_partyMemberSkillListBoxes_dict[CurrentPartyMember_turn.First_Name].SetActiveStatus(true);
+						_partyMemberSkillListBoxes_dict[CurrentPartyMember_turn.First_Name].bIsActive = true;
 					}
 
 					//State => WaitingFor Input
@@ -2473,10 +2414,10 @@ EventSkipOver:
 						List<object> paramList = new List<object>();
 						paramList.Add(CurrentPartyMember_turn);
 
-						_partyMemberSkillListBoxes_dict[CurrentPartyMember_turn.First_Name].SetActiveStatus(false); // Remove Skills UI from the Screen
+						_partyMemberSkillListBoxes_dict[CurrentPartyMember_turn.First_Name].bIsActive = false; // Remove Skills UI from the Screen
 
 						//TODO: DELETE
-						_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name].SetActiveStatus(false);
+						_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name].bIsActive = false;
 
 
 						//Is the skill we are using an AoE skills?
@@ -2532,7 +2473,7 @@ EventSkipOver:
 
 						//Get the Current Skill that we are going to use FUNCTION NAME
 						String funcname = CurrentPartyMember_turn.Skills[PlayerMenuIndex].Function_PTR;
-						MethodInfo SkillMethod = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.SkillDelegates").GetMethod(funcname);
+						MethodInfo SkillMethod = Type.GetType("BixBite.Combat.CombatDelegates.SkillDelegates").GetMethod(funcname);
 						SkillMethod.Invoke(null, new object[]{this, paramList }); //Invoke this method 
 
 
@@ -2572,7 +2513,7 @@ EventSkipOver:
 					bDrawSkillMenu_UI = true;
 
 					_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name].SetPosition(ItemsMenu_UI_pos + new Vector2(-400, 0));
-					_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name].SetActiveStatus(true);
+					_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name].bIsActive = true;
 
 					//State => WaitingFor Input
 					combatState = ECombatState.WaitingForInput;
@@ -2589,7 +2530,7 @@ EventSkipOver:
 						List<object> paramList = new List<object>();
 						paramList.Add(CurrentPartyMember_turn);
 						
-						_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name].SetActiveStatus(false);
+						_partyMemberItemsListBoxes_dict[CurrentPartyMember_turn.First_Name].bIsActive = false;
 
 						//Is the skill we are using an AoE skills?
 						List<BattleEntity> affectedBattleEntitys = new List<BattleEntity>();
@@ -2644,7 +2585,7 @@ EventSkipOver:
 
 						//Get the Current Skill that we are going to use FUNCTION NAME
 						String funcname = CurrentPartyMember_turn.Items[PlayerMenuIndex].Function_PTR;
-						MethodInfo ItemMethod = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.ItemDelegates").GetMethod(funcname);
+						MethodInfo ItemMethod = Type.GetType("BixBite.Combat.CombatDelegates.ItemDelegates").GetMethod(funcname);
 						ItemMethod.Invoke(null, new object[] { this, paramList }); //Invoke this method 
 
 
@@ -3046,7 +2987,7 @@ EventSkipOver:
 						}
 
 						//Invoke Reflection to call the specific method for this follow up attack!
-						MethodInfo FollowUpAttack = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.FollowUpAttacksDelegates").GetMethod(RequestedFollowupAttacks[0].Item1);
+						MethodInfo FollowUpAttack = Type.GetType("BixBite.Combat.CombatDelegates.FollowUpAttacksDelegates").GetMethod(RequestedFollowupAttacks[0].Item1);
 
 						List<object> paramList = new List<object>();
 						//paramList.Add(this);
@@ -3424,20 +3365,22 @@ EventSkipOver:
 			}
 
 			//We have the Queue. Now we just need to load them into the turn queue
-			TurnQueue_GameListBox.SetActiveStatus(true);
+			TurnQueue_GameListBox.bIsActive = true;
 			TurnQueue_GameListBox.Items.Clear();
 			foreach (BattleEntity battleEntity in TurnQueue.ToList())
 			{
 
-				TurnQueue_GameListBox.Items.Add(new GameListBoxItem(TurnQueue_GameListBox, 100, 100));
-				TurnQueue_GameListBox.Items.Last().LoadBorderTexture(ContentRef.Load<Texture2D>("Images/UI/TurnQueueBackground"));
+				//TurnQueue_GameListBox.Items.Add(new GameListBoxItem(TurnQueue_GameListBox, 100, 100));
+				TurnQueue_GameListBox.Items.Add(new GameListBoxItem(TurnQueue_GameListBox, String.Format("Turn_Queue_"), 100, 100,
+					100, 100, 1, false, false, ContentRef.Load<Texture2D>("Images/UI/TurnQueueBackground")
+					, null));
 				
 				//TurnQueue_GameListBox.Items.Last().Controls.Add(new GameTextBlock("ItemDesc", 100, 25, 40, 0, 1, "#00000000", "Skill " + (i + 1))
 				//	{ _font = Content.Load<SpriteFont>("Font/BaseFont"), PenColour = Color.White, Position = testListBox_Vert.Items[i].AbsolutePosition, bMiddleVertical = true });
 
 			}
 			TurnQueue_GameListBox.SetSpacing(20);
-			TurnQueue_GameListBox.SetAbsolutePosition_Items( new Vector2(10, 10), 0, 100);
+			//TurnQueue_GameListBox.SetAbsolutePosition_Items( new Vector2(10, 10), 0, 100);
 			TurnQueue_GameListBox.SetHighlightedPositions_Items(4, 4);
 			TurnQueue_GameListBox.LoadHighlightedTexture(ContentRef.Load<Texture2D>("Images/UI/TurnQueueBackground_Highlight"));
 
@@ -3445,13 +3388,13 @@ EventSkipOver:
 			foreach (BattleEntity battleEntity in TurnQueue.ToList())
 			{
 
-				GameIMG img = new GameIMG("Icon", 60, 60, 0, 20, 20)
-					{ Position = TurnQueue_GameListBox.Items[counter].AbsolutePosition };
-				//img.SetGraphicsDeviceRef(GraphicsDevice);
-				img.SetUITexture(true, battleEntity.Icon);
+				Rendering.UI.Image.GameImage img = new Rendering.UI.Image.GameImage("Icon", TurnQueue_GameListBox.Items[counter].XPos,
+					TurnQueue_GameListBox.Items[counter].YPos, 60, 60, 1, false,
+					0, 20, "", "", battleEntity.Icon);
+
 
 				TurnQueue_GameListBox.Items[counter].Controls.Add(img);
-				TurnQueue_GameListBox.Items[counter++].SetActiveStatus(true);
+				TurnQueue_GameListBox.Items[counter++].bIsActive = true;
 			}
 			TurnQueue_GameListBox.ResetSelected();
 
@@ -3465,44 +3408,67 @@ EventSkipOver:
 			PartyMembers.Add(Name, pm);
 
 			//We need to create a UI for skills
-			_partyMemberSkillListBoxes_dict.Add(pm.First_Name, new GameListBox(Vector2.Zero, 300, 250, 250, 40, 6, DownKey, UpKey, Keys.None, Keys.None, SelectKey, BackKey, 20, false));
-			_partyMemberSkillListBoxes_dict.Last().Value.SelectRequest_Hook = delegate (int value) { Console.WriteLine("Selected: " + value); _partyMemberSkillListBoxes_dict.Last().Value.SetActiveStatus(false); };
-			_partyMemberSkillListBoxes_dict.Last().Value.SetActiveStatus(false);
+			//_partyMemberSkillListBoxes_dict.Add(pm.First_Name, new GameListBox(Vector2.Zero, 300, 250, 250, 40, 6, DownKey, UpKey, Keys.None, Keys.None, SelectKey, BackKey, 20, false));
+			_partyMemberSkillListBoxes_dict.Add(pm.First_Name, new GameListBox( "Skills_UI", 0,0, 300, 250, 1, false, 0,
+				Color.White, 0,0,250, 40, 5, 6, 0, 
+				DownKey, UpKey, Keys.None, Keys.None, SelectKey, BackKey, null,
+				ContentRef.Load<Texture2D>("Images/UI/CombatListBox_Background"), null, EPositionType.Vertical));
+			_partyMemberSkillListBoxes_dict.Last().Value.SelectRequest_Hook =
+				delegate(int value)
+				{
+					Console.WriteLine("Selected: " + value); _partyMemberSkillListBoxes_dict.Last().Value.bIsActive = (false); 
+
+				};
+			_partyMemberSkillListBoxes_dict.Last().Value.bIsActive = false;
 			_partyMemberSkillListBoxes_dict.Last().Value.SetSpacing(0);
 
 			foreach (Skill skill in pm.Skills)
 			{
 				//Create the Items.
-				_partyMemberSkillListBoxes_dict.Last().Value.Items.Add(new GameListBoxItem(_partyMemberSkillListBoxes_dict.Last().Value, 150, 40));
-				_partyMemberSkillListBoxes_dict.Last().Value.Items.Last().LoadBorderTexture(ContentRef.Load<Texture2D>("Images/UI/CombatListBox_Background"));
-				_partyMemberSkillListBoxes_dict.Last().Value.SetAbsolutePosition_Items(new Vector2(0, 0), 40); //Set the Items Added Positions
+				//_partyMemberSkillListBoxes_dict.Last().Value.Items.Add(new GameListBoxItem(_partyMemberSkillListBoxes_dict.Last().Value, 150, 40));
+				_partyMemberSkillListBoxes_dict.Last().Value.Items.Add(new GameListBoxItem(_partyMemberSkillListBoxes_dict.Last().Value, 
+					String.Format( "Skills_{0}", skill.Name), _partyMemberSkillListBoxes_dict.Last().Value.XPos,
+					_partyMemberSkillListBoxes_dict.Last().Value.YPos, 150, 40, 1, true, false,
+					ContentRef.Load<Texture2D>("Images/UI/CombatListBox_Background"), null
+					));
+				_partyMemberSkillListBoxes_dict.Last().Value.SetAbsolutePosition_Items(new Vector2(0, 0)); //Set the Items Added Positions
 				//FIll in the Item data
 				_partyMemberSkillListBoxes_dict.Last().Value.Items.Last().Controls.Add
 				(
-				new GameTextBlock("SkillName", 100, 40, 50, 0, 1, "#000000000", skill.Name)
-					{ bMiddleVertical = true, PenColour = Color.White, _font = Font, Position = _partyMemberSkillListBoxes_dict.Last().Value.Items.Last().AbsolutePosition }	
+					new GameTextBlock("SkillName", _partyMemberSkillListBoxes_dict.Last().Value.Items.Last().XPos,
+						_partyMemberSkillListBoxes_dict.Last().Value.Items.Last().YPos,
+						100, 40, 1, false, 50, 0, skill.Name, 0.0f, "#000000000",
+						"", Font, null, Color.White)
+					{ bMiddleVertical = true}	
 				);
 			}
 
 			//We need to create a UI for items
-			_partyMemberItemsListBoxes_dict.Add(pm.First_Name, new GameListBox(Vector2.Zero, 300, 250, 250, 40, 6, DownKey, UpKey, Keys.None, Keys.None, SelectKey, Keys.Back, 20, false ));
+			_partyMemberItemsListBoxes_dict.Add(pm.First_Name, new GameListBox("Items_LB	", 0,0, 300, 250, 1, false, 0
+			, Color.White, 0,0, 300, 40,1,  6,0, 
+			DownKey, UpKey, Keys.None, Keys.None, SelectKey, Keys.Back, null,null, null,EPositionType.Vertical ));
 			_partyMemberItemsListBoxes_dict.Last().Value.SelectRequest_Hook = delegate(int value)
 			{
 				Console.WriteLine("Selected: " + value);
-				_partyMemberItemsListBoxes_dict.Last().Value.SetActiveStatus(false);
+				_partyMemberItemsListBoxes_dict.Last().Value.bIsActive = (false);
 			};
-			_partyMemberSkillListBoxes_dict.Last().Value.SetActiveStatus(false);
+			_partyMemberSkillListBoxes_dict.Last().Value.bIsActive = (false);
 			_partyMemberSkillListBoxes_dict.Last().Value.SetSpacing(0);
 
 			foreach (Item item in pm.Items)
 			{
-				_partyMemberItemsListBoxes_dict.Last().Value.Items.Add(new GameListBoxItem(_partyMemberItemsListBoxes_dict.Last().Value, 150, 40));
-				_partyMemberItemsListBoxes_dict.Last().Value.Items.Last().LoadBorderTexture(ContentRef.Load<Texture2D>("Images/UI/CombatListBox_Background"));
-				_partyMemberItemsListBoxes_dict.Last().Value.SetAbsolutePosition_Items(new Vector2(0,0), 40);
+				_partyMemberItemsListBoxes_dict.Last().Value.Items.Add(new GameListBoxItem(_partyMemberItemsListBoxes_dict.Last().Value, String.Format("Item_{0}", item.ID),
+					_partyMemberItemsListBoxes_dict.Last().Value.XPos, _partyMemberItemsListBoxes_dict.Last().Value.YPos, 150, 40, 1, true,false,
+					ContentRef.Load<Texture2D>("Images/UI/CombatListBox_Background"), null));
+				//_partyMemberItemsListBoxes_dict.Last().Value.Items.Last().LoadBorderTexture(ContentRef.Load<Texture2D>("Images/UI/CombatListBox_Background"));
+				_partyMemberItemsListBoxes_dict.Last().Value.SetAbsolutePosition_Items(new Vector2(0,0));
 				_partyMemberItemsListBoxes_dict.Last().Value.Items.Last().Controls.Add
 				(
-				new GameTextBlock("ItemName", 100, 40, 30, 0, 1, "#00000000", item.ID)
-				{ bMiddleVertical = true, PenColour = Color.White, _font = Font, Position = _partyMemberItemsListBoxes_dict.Last().Value.Items.Last().AbsolutePosition}
+				new GameTextBlock("ItemName",
+					_partyMemberItemsListBoxes_dict.Last().Value.Items.Last().XPos, _partyMemberItemsListBoxes_dict.Last().Value.Items.Last().YPos ,
+					100, 40, 1, false, 30, 0, item.ID, 0.0f, "#00000000", "",
+					Font, null, Color.White)
+				{ bMiddleVertical = true }
 				);
 			}
 
@@ -3614,14 +3580,15 @@ EventSkipOver:
 				paramList.Add(tup.Item2);
 				//Get the Current Skill that we are going to use FUNCTION NAME
 				String funcname = tup.Item2.Function_PTR;
-				MethodInfo SkillMethod = Type.GetType("CombatSystem.Components.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
+				MethodInfo SkillMethod = Type.GetType("BixBite.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
 				SkillMethod.Invoke(null, new object[] { this, paramList }); //Invoke this method 
 			}
 
 
 			//Set up the testing textbox to switch on command
 			Vector2 pos = WeaponLeftArrow_UI_rect.Location.ToVector2() + new Vector2(40, 20);
-			Weapon_GTB.Position = pos;
+			Weapon_GTB.XPos = (int)pos.X;
+			Weapon_GTB.YPos = (int)pos.Y;
 			Weapon_GTB.SetProperty("Width",
 				WeaponRightArrow_UI_rect.X - WeaponLeftArrow_UI_rect.X - WeaponLeftArrow_UI.Width);
 			Weapon_GTB.SetProperty("Height", 40);
@@ -3923,7 +3890,8 @@ EventSkipOver:
 					Stance_GTB.Text = CurrentPartyMember_turn.CurrentStance.Value.ToString();
 
 					Vector2 pos = StanceLeftArrow_UI_rect.Location.ToVector2() + new Vector2(StanceLeftArrow_UI.Width ,0);
-					Stance_GTB.Position = pos;
+					Stance_GTB.XPos = (int)pos.X;
+					Stance_GTB.YPos = (int)pos.Y;
 					Stance_GTB.SetProperty("Width", (StanceRightArrow_UI_rect.X - StanceLeftArrow_UI_rect.Location.X - StanceLeftArrow_UI.Width));
 
 
@@ -3935,8 +3903,9 @@ EventSkipOver:
 						CurrentPartyMember_turn.Stances_LL.First : CurrentPartyMember_turn.CurrentStance.Next);
 					Stance_GTB.Text = CurrentPartyMember_turn.CurrentStance.Value.ToString();
 
-					Vector2 pos = StanceLeftArrow_UI_rect.Location.ToVector2() + new Vector2(StanceLeftArrow_UI.Width, 0); ;
-					Stance_GTB.Position = pos;
+					Vector2 pos = StanceLeftArrow_UI_rect.Location.ToVector2() + new Vector2(StanceLeftArrow_UI.Width, 0); 
+					Stance_GTB.XPos = (int)pos.X;
+					Stance_GTB.YPos = (int)pos.Y;
 					Stance_GTB.SetProperty("Width", (StanceRightArrow_UI_rect.X - StanceLeftArrow_UI_rect.Location.X - StanceLeftArrow_UI.Width));
 				}
 				else
@@ -4657,20 +4626,9 @@ EventSkipOver:
 
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
-			if (debug_LogBlock != null && (debug_LogBlock as GameTextBlock)._font != null)
-			{
-				debug_LogBlock.Draw(gameTime, spriteBatch);
-			}
-
-			if (Stance_GTB != null && (Stance_GTB as GameTextBlock)._font != null)
-			{
-				Stance_GTB.Draw(gameTime, spriteBatch);
-			}
-
-			if (Weapon_GTB != null && (Weapon_GTB as GameTextBlock)._font != null)
-			{
-				Weapon_GTB.Draw(gameTime, spriteBatch);
-			}
+			debug_LogBlock?.Draw(gameTime, spriteBatch);
+			Stance_GTB?.Draw(gameTime, spriteBatch);
+			Weapon_GTB?.Draw(gameTime, spriteBatch);
 
 			if (CurrentPartyMembersNames.Count == 0)
 			{

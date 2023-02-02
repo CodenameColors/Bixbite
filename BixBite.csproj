@@ -125,8 +125,11 @@
     <Compile Include="Rendering\Animation\LayeredSpriteSheet.cs" />
     <Compile Include="Rendering\Animation\SpriteAnimation.cs" />
     <Compile Include="Rendering\Animation\SpriteSheet.cs" />
+    <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\Helpers\CircleUtillties.cs" />
     <Compile Include="Rendering\Helpers\RectangleUtilities.cs" />
+    <Compile Include="Rendering\Map.cs" />
+    <Compile Include="Rendering\Tile.cs" />
     <Compile Include="Rendering\UI\BaseUI.cs" />
     <Compile Include="Rendering\UI\BaseUIComponent.cs" />
     <Compile Include="Rendering\UI\Button\BaseButtonUI.cs" />

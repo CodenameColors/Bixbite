@@ -324,6 +324,7 @@ namespace BixBite.Rendering.UI.ListBox
 					: MaxDisplayedItems));
 			for (int i = 0; i < limit; i++)
 			{
+				if (_itemPositions_List.Count == 0) break;
 				(Items[i + _listBoxRenderPointer] as ListBoxItems.GameListBoxItem).SetAbsolutePosition(_itemPositions_List[i]);
 
 			}
