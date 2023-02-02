@@ -428,13 +428,15 @@ namespace BixBite.Combat
 
 			//DEBUG TEXTBLOCK
 			GameTextBlock tbtest = new GameTextBlock("LogTextblock", 20, 1080 - 120, 0, 0, 1, false, 0, 0, "testing",
-				0.0f, "", "", Font, null, Color.White);
+				0.0f, "", "", Font, null, Color.White)
+				{ bIsActive = true };
 
 			debug_LogBlock = (tbtest);
 
 			//Stance TEXTBLOCK
-			GameTextBlock stancetb = new GameTextBlock("StanceTextBlock", 160, 40, 0, 0, 0, false, 0, 0, "[PUTSTANCENAMEHERE]",
-				0.0f, "", "", Font, null, Color.White);
+			GameTextBlock stancetb = new GameTextBlock("StanceTextBlock", 160, 40, 0, 0, 0, false, 0, 20, "[PUTSTANCENAMEHERE]",
+				0.0f, "", "", Font, null, Color.White)
+				{ bIsActive = true };
 
 			Stance_GTB = (stancetb);
 			//((GameTextBlock)Stance_GTB).Position = new Vector2(20, 20);
@@ -444,7 +446,8 @@ namespace BixBite.Combat
 
 			//weapon TEXTBLOCK
 			GameTextBlock weapontb = new GameTextBlock("WeaponTextBlock", 160, 40, 0, 0, 1, false, 0, 0, "[PUTWEAPONNAMEHERE]",
-				0.0f, "", "", Font, null, Color.White);
+				0.0f, "", "", Font, null, Color.White)
+				{ bIsActive = true };
 
 			Weapon_GTB = (weapontb);
 			Weapon_GTB.bMiddleHorizontal = true;
@@ -454,7 +457,8 @@ namespace BixBite.Combat
 			TurnQueue_GameListBox = new GameListBox("Turn_Queue_LB", 10, 10, 1920 - 100 - 600, 100, 1, false, 0, Color.White,
 				10, 10, 100, 100, 10, 10, 0,
 				Keys.None, Keys.None, Keys.None, Keys.None, Keys.None, Keys.None, null,
-				null , null, EPositionType.Horizontal);
+				null , null, EPositionType.Horizontal)
+				{ bIsActive = true };
 		}
 
 		public void LoadIzzysUIBindingForTest(GraphicsDevice graphicsDevice, String file1, String file2, String file3, String arrowleft, String arrowright, String inventory)
@@ -3413,7 +3417,7 @@ EventSkipOver:
 			_partyMemberSkillListBoxes_dict.Add(pm.First_Name, new GameListBox( "Skills_UI", 0,0, 300, 250, 1, false, 0,
 				Color.White, 0,0,250, 40, 5, 6, 0, 
 				DownKey, UpKey, Keys.None, Keys.None, SelectKey, BackKey, null,
-				ContentRef.Load<Texture2D>("Images/UI/CombatListBox_Background"), null, EPositionType.Vertical));
+				null, null, EPositionType.Vertical));
 			_partyMemberSkillListBoxes_dict.Last().Value.SelectRequest_Hook =
 				delegate(int value)
 				{
@@ -3431,7 +3435,10 @@ EventSkipOver:
 					String.Format( "Skills_{0}", skill.Name), _partyMemberSkillListBoxes_dict.Last().Value.XPos,
 					_partyMemberSkillListBoxes_dict.Last().Value.YPos, 150, 40, 1, true, false,
 					ContentRef.Load<Texture2D>("Images/UI/CombatListBox_Background"), null
-					));
+					)
+				{
+					bIsActive = true
+				});
 				_partyMemberSkillListBoxes_dict.Last().Value.SetAbsolutePosition_Items(new Vector2(0, 0)); //Set the Items Added Positions
 				//FIll in the Item data
 				_partyMemberSkillListBoxes_dict.Last().Value.Items.Last().Controls.Add
@@ -3440,14 +3447,15 @@ EventSkipOver:
 						_partyMemberSkillListBoxes_dict.Last().Value.Items.Last().YPos,
 						100, 40, 1, false, 50, 0, skill.Name, 0.0f, "#000000000",
 						"", Font, null, Color.White)
-					{ bMiddleVertical = true}	
+					{ bMiddleVertical = true, bIsActive = true}	
 				);
 			}
 
 			//We need to create a UI for items
 			_partyMemberItemsListBoxes_dict.Add(pm.First_Name, new GameListBox("Items_LB	", 0,0, 300, 250, 1, false, 0
 			, Color.White, 0,0, 300, 40,1,  6,0, 
-			DownKey, UpKey, Keys.None, Keys.None, SelectKey, Keys.Back, null,null, null,EPositionType.Vertical ));
+			DownKey, UpKey, Keys.None, Keys.None, SelectKey, Keys.Back, null,null, null,EPositionType.Vertical )
+				{bIsActive = true});
 			_partyMemberItemsListBoxes_dict.Last().Value.SelectRequest_Hook = delegate(int value)
 			{
 				Console.WriteLine("Selected: " + value);
@@ -3469,7 +3477,7 @@ EventSkipOver:
 					_partyMemberItemsListBoxes_dict.Last().Value.Items.Last().XPos, _partyMemberItemsListBoxes_dict.Last().Value.Items.Last().YPos ,
 					100, 40, 1, false, 30, 0, item.ID, 0.0f, "#00000000", "",
 					Font, null, Color.White)
-				{ bMiddleVertical = true }
+				{ bMiddleVertical = true , bIsActive = true}
 				);
 			}
 
