@@ -454,7 +454,7 @@ namespace BixBite.Combat
 			TurnQueue_GameListBox = new GameListBox("Turn_Queue_LB", 10, 10, 1920 - 100 - 600, 100, 1, false, 0, Color.White,
 				10, 10, 100, 100, 10, 10, 0,
 				Keys.None, Keys.None, Keys.None, Keys.None, Keys.None, Keys.None, null,
-				ContentRef.Load<Texture2D>("Images/UI/TurnQueueBackground"), null, EPositionType.Horizontal);
+				null , null, EPositionType.Horizontal);
 		}
 
 		public void LoadIzzysUIBindingForTest(GraphicsDevice graphicsDevice, String file1, String file2, String file3, String arrowleft, String arrowright, String inventory)
@@ -3380,7 +3380,7 @@ EventSkipOver:
 
 			}
 			TurnQueue_GameListBox.SetSpacing(20);
-			//TurnQueue_GameListBox.SetAbsolutePosition_Items( new Vector2(10, 10), 0, 100);
+			TurnQueue_GameListBox.SetAbsolutePosition_Items( new Vector2(10, 10));
 			TurnQueue_GameListBox.SetHighlightedPositions_Items(4, 4);
 			TurnQueue_GameListBox.LoadHighlightedTexture(ContentRef.Load<Texture2D>("Images/UI/TurnQueueBackground_Highlight"));
 
@@ -3390,7 +3390,8 @@ EventSkipOver:
 
 				Rendering.UI.Image.GameImage img = new Rendering.UI.Image.GameImage("Icon", TurnQueue_GameListBox.Items[counter].XPos,
 					TurnQueue_GameListBox.Items[counter].YPos, 60, 60, 1, false,
-					0, 20, "", "", battleEntity.Icon);
+					20, 20, "", "", battleEntity.Icon)
+					{ bIsActive = true};
 
 
 				TurnQueue_GameListBox.Items[counter].Controls.Add(img);
