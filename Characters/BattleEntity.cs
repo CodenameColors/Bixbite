@@ -117,7 +117,7 @@ namespace BixBite.Characters
 		}
 
 		public List<BaseStatChange> StatChange_List = new List<BaseStatChange>();
-		public List<BaseStatChange> StatusEffect_List = new List<BaseStatChange>();
+		public List<StatusEffectChange> StatusEffect_List = new List<StatusEffectChange>();
 
 		public Texture2D Icon { get; set; }
 

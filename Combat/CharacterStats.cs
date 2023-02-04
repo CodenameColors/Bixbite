@@ -41,11 +41,32 @@ namespace BixBite.Combat
 
 		public ModifierData LinkedModifierData { get; set; }
 
-		public void DecrementTurnCounter()
+		public void DecrementTurnCounter(int decreaseAmount = 1)
 		{
-			LengthInTurns--;
+			LengthInTurns -= decreaseAmount;
 		}
+	}
 
+	public class AmmoStatChange
+	{
+		//What type of stat change?
+		//public EStatChange StatToChange;
+		public AmmoStats StatToChange;
+
+		//The Amount to change the stat.
+		//public float ChangeValue { get; set; }
+
+		//The length of time in turns this stat change occurs
+		public int LengthInTurns { get; set; }
+
+		public bool bIsActive { get; set; }
+
+		public ModifierData LinkedModifierData { get; set; }
+
+		public void DecrementTurnCounter(int decreaseAmount = 1)
+		{
+			LengthInTurns -= decreaseAmount;
+		}
 	}
 
 	public class StatusEffectChange 
@@ -58,6 +79,11 @@ namespace BixBite.Combat
 
 		//The length of time in turns this stat change occurs
 		public int LengthInTurns { get; set; }
+
+		public void DecrementTurnCounter(int decreaseAmount = 1)
+		{
+			LengthInTurns -= decreaseAmount;
+		}
 	}
 
 	public class BaseStats
@@ -90,5 +116,27 @@ namespace BixBite.Combat
 	{
 
 	}
+
+}
+
+public class AmmoStats
+{
+	public int ID { get; set; }
+	public int Current_Ammo { get; set; }
+	public int Max_Ammo{ get; set; }
+	public int Bullets_Per_Use { get; set; }
+
+	//public class CharacterStats
+	//{
+
+	//}
+
+	/// <summary>
+	/// This is specifically to make the database happy, while i still get to keep my CamelCase 
+	/// </summary>
+	public class Ammo_Stats : AmmoStats
+	{
+
+}
 
 }

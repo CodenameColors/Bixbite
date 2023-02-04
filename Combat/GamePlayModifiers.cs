@@ -192,7 +192,7 @@ namespace BixBite.Combat
 
 	#endregion
 
-	//Some of these are ints because of bit wise enumeration
+	// these are ints because of bit fields 
 	public class ModifierData	
 	{
 		public String Id { get; set; }

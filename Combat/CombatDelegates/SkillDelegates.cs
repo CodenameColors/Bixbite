@@ -82,7 +82,6 @@ namespace BixBite.Combat.CombatDelegates
 				cbsref.QueueCombatAction(new CombatMoveAction(cbsref, em, (int) em.SpawnPosition.X + 50, (int) em.SpawnPosition.Y - 10, 10, false));
 
 				cbsref.QueueCombatAction(new CombatDelayAction(cbsref, 100));
-
 				//Move enemy back to spawn position
 				cbsref.QueueCombatAction(new CombatMoveAction(cbsref, em, (int) em.SpawnPosition.X, (int) em.SpawnPosition.Y, 10, false ));
 
