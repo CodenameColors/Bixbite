@@ -36,7 +36,7 @@ namespace BixBite
 		/// <summary>
 		/// List of characters in this scene
 		/// </summary>
-		public ObservableCollection<SceneCharacter> Characters = new ObservableCollection<SceneCharacter>();
+		public ObservableCollection<SceneEntity> Characters = new ObservableCollection<SceneEntity>();
 
 		public ObservableCollection<Timeline> Timelines = new ObservableCollection<Timeline>();
 
@@ -150,7 +150,7 @@ namespace BixBite
 		#endregion
 
 
-		public void AddCharacterToScene(SceneCharacter deschar)
+		public void AddCharacterToScene(SceneEntity deschar)
 		{
 			Characters.Add(deschar);
 		}
@@ -162,7 +162,7 @@ namespace BixBite
 		/// <param name="sprite"></param>
 		public void AddSprite(String CharName, Sprite sprite)
 		{
-			foreach (SceneCharacter c in Characters)
+			foreach (SceneEntity c in Characters)
 			{
 				if (c.Name.Contains(CharName))
 				{
@@ -205,7 +205,7 @@ namespace BixBite
 						if (reader.Name == "Character" && reader.NodeType == XmlNodeType.Element)
 						{
 							//add the character to the scene
-							retDialogueScene.Characters.Add(new SceneCharacter(reader.GetAttribute("Horizontal"), reader.GetAttribute("Vertical"))
+							retDialogueScene.Characters.Add(new SceneEntity(reader.GetAttribute("Horizontal"), reader.GetAttribute("Vertical"))
 							{
 								Name = reader.GetAttribute("Name"),
 								LinkedImageBox = reader.GetAttribute("LinkedImgBox"),
@@ -555,7 +555,7 @@ namespace BixBite
 		/// <param name="GameUIs">List of UI files in use</param>
 		/// <param name="sceneParams">List of params for this scene</param>
 		/// <param name="SceneBlockNodes">List of all the block nodes for this scene</param>
-		public void ExportScene(String filePath, List<SceneCharacter> characters, List<String> GameUIs,List<Tuple<String, object>> sceneParams, List<BaseNodeBlock> SceneBlockNodes)
+		public void ExportScene(String filePath, List<SceneEntity> characters, List<String> GameUIs,List<Tuple<String, object>> sceneParams, List<BaseNodeBlock> SceneBlockNodes)
 		{
 			XmlWriterSettings settings = new XmlWriterSettings
 			{
@@ -574,7 +574,7 @@ namespace BixBite
 
 				writer.WriteStartElement(null, "Characters", null); //create "Characters" Tag
 				int i = 0;
-				foreach (SceneCharacter character in characters) //create a character tag
+				foreach (SceneEntity character in characters) //create a character tag
 				{
 					writer.WriteStartElement(null, "Character", null);
 					writer.WriteAttributeString(null, "Name", null, character.Name);

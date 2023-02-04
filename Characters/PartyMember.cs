@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using BixBite.Combat;
 using BixBite.Combat.Equipables;
+using BixBite.Combat.Equipables.Weapons;
 using BixBite.Rendering.UI;
 using BixBite.Rendering.UI.Button;
 using BixBite.Rendering.UI.Checkbox;
@@ -200,6 +202,66 @@ namespace BixBite.Characters
 			CurrentStance = Stances_LL.First;
 		}
 
+		#region ICombat Interface
+		/// <summary>
+		/// This function is here to handle stats that need to change on the loading of a battle entity 
+		/// in the combat system. Simple things, like adding and subtracting stats, status effects. etc
+		/// </summary>
+		public override void Initialize()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override bool CanAttack()
+		{
+			bool returnBool = true;
+
+			if (CurrentWeapon.Value is RangedWeapons rangedWeapon)
+				returnBool = rangedWeapon.CanShoot();
+			return returnBool;
+		}
+
+		/// <summary>
+		/// This function is here to handle all things that need to be done when a battle entity attacks
+		/// Examples include stealing stats, stealing money, subtracting ammo/charge count, other stat changes etc.
+		/// THIS means the attacking entity NOT the target entity
+		/// </summary>
+		public override void Attack()
+		{
+			if (CurrentWeapon.Value is RangedWeapons rangedWeapon)
+			{
+				// we should have already checked if we can attack if we are calling this. so let's attack!
+
+				// First up subtract the ammo type.
+				rangedWeapon.SubtractAmmo();
+
+				// TODO: Check the weapons modifiers for stats based stuff. We do this in the state machine currently.
+			}
+			else if (CurrentWeapon.Value is MagicWeapon magicWeapon)
+			{
+				throw new NotImplementedException("Not Created anything to do with magic based weapons.");
+			}
+		}
+
+		/// <summary>
+		/// Handles all the stat changes that are needed when an entity chooses to defend
+		/// </summary>
+		public override void Defend()
+		{
+			throw new NotImplementedException();
+
+		}
+
+		/// <summary>
+		/// Handles all the required changes that need to be done when an entity gets hit.
+		/// Stat changes, take damage, maybe deal damage (thorns), etc
+		/// </summary>
+		public override void GotHit(BattleEntity attackingBattleEntity)
+		{
+			throw new NotImplementedException();
+
+		}
+		#endregion
 
 		/// <summary>
 		/// Constructor for COMBAT
@@ -281,7 +343,6 @@ namespace BixBite.Characters
 			{
 				spriteBatch.Draw(StanceIndicator_Texture2D, StanceIndicator_Rectangle, StanceIndicator_Color);
 			}
-
 		}
 
 

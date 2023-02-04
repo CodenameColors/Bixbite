@@ -20,12 +20,12 @@ namespace BixBite.Combat.CombatDelegates
 			if (battleEntity_instigator is null)
 				battleEntity_instigator = paramList[0] as Enemy; //Check to make sure all the params match
 			if (battleEntity_instigator is null)
-				throw new Exception(String.Format("Casting of the params list failed for Skill: [{0}]", "AttackUpS_Dele"));//something is missing.
+				throw new Exception(String.Format("Casting of the params list failed for Skill: [{0}]", System.Reflection.MethodBase.GetCurrentMethod()?.Name));//something is missing.
 
 			if (battleEntity_target is null)
 				battleEntity_target = paramList[1] as Enemy;//Check to make sure all the params match
 			if (battleEntity_target is null)
-				throw new Exception(String.Format("Casting of the params list failed for Skill: [{0}]", "AttackUpS_Dele")); //something is missing.
+				throw new Exception(String.Format("Casting of the params list failed for Skill: [{0}]", System.Reflection.MethodBase.GetCurrentMethod()?.Name)); //something is missing.
 
 			//For this modifier we need to set the target on fire [status effect] for X amount of turns
 			battleEntity_target.StatusEffect_List.Add(new BaseStatChange()

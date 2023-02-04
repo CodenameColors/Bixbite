@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using BixBite.Characters;
+using BixBite.Combat.Equipables.Weapons;
 using BixBite.Items;
 using BixBite.Particles;
 using BixBite.Rendering;
@@ -1068,8 +1069,7 @@ namespace BixBite.Combat
 						MethodInfo SkillMethod = Type.GetType("BixBite.Combat.CombatDelegates.ModifierDelegates").GetMethod(funcname);
 						SkillMethod.Invoke(null, new object[] { this, paramList }); //Invoke this method 
 					}
-
-
+					// TODO: make the methods for dealing and taking damage call the new interface methods i wrote up
 					em.CurrentHealth -= (int)entities[em];
 					if (em.CurrentHealth == 0)
 					{

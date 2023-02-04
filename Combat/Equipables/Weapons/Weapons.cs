@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BixBite.Combat
+namespace BixBite.Combat.Equipables.Weapons
 {
 
 	public enum EWeaponType
@@ -13,17 +10,17 @@ namespace BixBite.Combat
 		OneHandSword = 1,
 		TwoHandSword = 2,
 		Shield = 4,
-		Axe = 8,
+		// Axe = 8,
 		Bow = 16,
 		Spear = 32,
 		Staff = 64,
 		Scythe = 128,
-		Rapier = 256,
+		// Rapier = 256,
 		Gauntlets = 512,
 		Dagger = 1024,
 		Wand = 2048,
 		Gun = 4096,
-		Explosive = 8192
+		Explosive = 8192,
 	}
 
 	public class Weapon : Equipable

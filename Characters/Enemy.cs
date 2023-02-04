@@ -29,6 +29,48 @@ namespace BixBite.Characters
 			set => Equipement[2] = value;
 		}
 
+		#region ICombat Interface
+		/// <summary>
+		/// This function is here to handle stats that need to change on the loading of a battle entity 
+		/// in the combat system. Simple things, like adding and subtracting stats, status effects. etc
+		/// </summary>
+		public override void Initialize()
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// This function is here to handle all things that need to be done when a battle entity attacks
+		/// Examples include stealing stats, stealing money, subtracting ammo/charge count, other stat changes etc.
+		/// THIS means the attacking entity NOT the target entity
+		/// </summary>
+		public override void Attack()
+		{
+			throw new NotImplementedException();
+
+		}
+
+		/// <summary>
+		/// Handles all the stat changes that are needed when an entity chooses to defend
+		/// </summary>
+		public override void Defend()
+		{
+			throw new NotImplementedException();
+
+		}
+
+		/// <summary>
+		/// Handles all the required changes that need to be done when an entity gets hit.
+		/// Stat changes, take damage, maybe deal damage (thorns), etc
+		/// </summary>
+		public override void GotHit(BattleEntity attackingBattleEntity)
+		{
+			throw new NotImplementedException();
+
+		}
+		#endregion
+
+
 
 	}
 

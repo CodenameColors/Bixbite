@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BixBite.Characters
 {
-	public class SceneCharacter : BaseCharacter
+	public class SceneEntity : BaseEntity
 	{
 		//Every Character has a name
 		public String Name { get; set; }
@@ -25,7 +25,7 @@ namespace BixBite.Characters
 		public String HorizontalAnchor = "";
 		public String VerticalAnchor = "";
 
-		public SceneCharacter(String horizontal, String vertical)
+		public SceneEntity(String horizontal, String vertical)
 		{
 			DialogueSprites = new ObservableCollection<Sprite>();
 			HorizontalAnchor = horizontal;

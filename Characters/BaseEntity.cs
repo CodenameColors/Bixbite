@@ -1,8 +1,11 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using BixBite.Combat;
 using BixBite.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -10,10 +13,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BixBite.Characters
 {
-	public class BaseCharacter
+	public class BaseEntity 
 	{
-		
-
 		//public Texture2D Texture;
 		public Vector2 Velocity = new Vector2();
 
@@ -73,7 +74,7 @@ namespace BixBite.Characters
 
 		private SpriteSheet _spriteAnimationSheet;
 
-		public BaseCharacter()
+		public BaseEntity()
 		{
 			//_spriteAnimationSheet = new SpriteSheet();
 		}
@@ -120,7 +121,6 @@ namespace BixBite.Characters
 			this.Height = _spriteAnimationSheet.CurrentAnimation.GetFrameHeight();
 
 		}
-
 
 		/// <summary>
 		/// Loads the SpriteSheet into memory. And sets up the texture of the sprite sheet
@@ -227,6 +227,44 @@ namespace BixBite.Characters
 			}
 			else _spriteAnimationSheet?.Draw(spriteBatch);
 		}
+
+	}
+
+	/// <summary>
+	/// Interface used to define all Combat required methods that every type of battle entity needs to be able to do
+	/// </summary>
+	public interface ICombat
+	{
+		/// <summary>
+		/// This function is here to handle stats that need to change on the loading of a battle entity 
+		/// in the combat system. Simple things, like adding and subtracting stats, status effects. etc
+		/// </summary>
+		void Initialize();
+
+		/// <summary>
+		/// Method used to find out whether a battle entity can attack the target, or even at all
+		/// </summary>
+		/// <returns></returns>
+		bool CanAttack();
+
+		/// <summary>
+		/// This function is here to handle all things that need to be done when a battle entity attacks
+		/// Examples include stealing stats, stealing money, subtracting ammo/charge count, other stat changes etc.
+		/// THIS means the attacking entity NOT the target entity
+		/// </summary>
+		void Attack();
+
+		/// <summary>
+		/// Handles all the stat changes that are needed when an entity chooses to defend
+		/// </summary>
+		void Defend();
+
+		/// <summary>
+		/// Handles all the required changes that need to be done when an entity gets hit.
+		/// Stat changes, take damage, maybe deal damage (thorns), etc
+		/// </summary>
+		void GotHit(BattleEntity attackingBattleEntity);
+
 
 	}
 }
