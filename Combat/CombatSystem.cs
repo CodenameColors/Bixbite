@@ -2157,7 +2157,9 @@ EventSkipOver:
 
 								break;
 							default:
-								throw new ArgumentOutOfRangeException();
+								debug_LogBlock.Text = String.Format("LAST HIT => CBS {0} | Not Valid Command | Key: {1}",
+									combatState.ToString(), pressedkey.ToString());
+								break;
 						}
 					}
 					else if (pastCombatState == ECombatState.SkillsUISpawn)
@@ -2220,7 +2222,9 @@ EventSkipOver:
 								break;
 
 							default:
-								throw new ArgumentOutOfRangeException();
+								debug_LogBlock.Text = String.Format("LAST HIT => CBS {0} | Choose Request Not Found| Key: {1}",
+									combatState.ToString(), pressedkey.ToString());
+								break;
 						}
 					}
 					else if (pastCombatState == ECombatState.ItemsUISpawn)
@@ -2286,7 +2290,7 @@ EventSkipOver:
 								ClearPastState();
 								DespawnUI();
 								//State => MainUISpawn
-								combatState = ECombatState.MainUISpawn;
+								combatState = ECombatState.ChooseTarget;
 								break;
 							//default:
 								
