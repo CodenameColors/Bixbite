@@ -216,8 +216,8 @@ namespace BixBite.Characters
 		{
 			bool returnBool = true;
 
-			if (CurrentWeapon.Value is RangedWeapons rangedWeapon)
-				returnBool = rangedWeapon.CanShoot();
+			if ((EWeaponType)CurrentWeapon.Value.Weapon_Type == EWeaponType.Bow || (EWeaponType)CurrentWeapon.Value.Weapon_Type == EWeaponType.Gun)
+				returnBool = CurrentWeapon.Value.CanShoot();
 			return returnBool;
 		}
 
@@ -228,12 +228,12 @@ namespace BixBite.Characters
 		/// </summary>
 		public override void Attack()
 		{
-			if (CurrentWeapon.Value is RangedWeapons rangedWeapon)
+			if ((EWeaponType)CurrentWeapon.Value.Weapon_Type == EWeaponType.Bow || (EWeaponType)CurrentWeapon.Value.Weapon_Type == EWeaponType.Gun )
 			{
 				// we should have already checked if we can attack if we are calling this. so let's attack!
 
 				// First up subtract the ammo type.
-				rangedWeapon.SubtractAmmo();
+				CurrentWeapon.Value.SubtractAmmo();
 
 				// TODO: Check the weapons modifiers for stats based stuff. We do this in the state machine currently.
 			}

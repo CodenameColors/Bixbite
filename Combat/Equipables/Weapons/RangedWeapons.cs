@@ -7,6 +7,27 @@ using System.Threading.Tasks;
 
 namespace BixBite.Combat.Equipables.Weapons
 {
+	public interface IRangedWeapons
+	{
+		void UpdateMaxAmmoOperand();
+
+		void UpdateBulletsPerUseOperand();
+
+		/// <summary>
+		/// Subtract one from the turn counter. Remove the modifier if this operation would make this  <= 0;
+		/// </summary>
+		void UpdateModifierOperandTurnCounters();
+
+		void Reload(); 
+
+		bool CanShoot();
+
+		void AddMaxAmmoModiferOperand(AmmoStatChange ammoStatChange);
+
+		void SubtractAmmo();
+	}
+
+
 	public class RangedWeapons : Weapon
 	{
 		/// <summary>

@@ -46,7 +46,6 @@ namespace BixBite.Characters
 		/// </summary>
 		public override void Attack()
 		{
-			throw new NotImplementedException();
 
 		}
 

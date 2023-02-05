@@ -71,6 +71,7 @@ namespace BixBite.Combat
 		ITEM,
 		DEFENSE,
 		SELECT,
+		RELOAD,
 		BACK,
 		MENU1,
 		MENU2,
@@ -185,6 +186,7 @@ namespace BixBite.Combat
 
 		private Keys BackKey;
 		private Keys SelectKey;
+		private Keys ReloadKey;
 
 		private Keys CBMenuSelect1;
 		private Keys CBMenuSelect2;
@@ -416,6 +418,8 @@ namespace BixBite.Combat
 
 			StanceLeftKey = Keys.Q; //Properties.Settings.Default.StanceLeft;
 			StanceRightKey = Keys.E; //Properties.Settings.Default.StanceRight;
+
+			ReloadKey = Keys.F1;
 
 			BackKey = Keys.Tab; //Properties.Settings.Default.Back;
 			SelectKey = Keys.Space; //Properties.Settings.Default.Select;
@@ -1827,6 +1831,9 @@ EventSkipOver:
 					if(combatActions_Queue.Count > 0) //Events still need to be handled
 						return;
 
+					//What weapon are we using?
+					EWeaponType entityWeaponType = (EWeaponType)CurrentTurnCharacter.CurrentWeapon.Value.Weapon_Type;
+
 					//movement is done, so spawn the UI!
 					// Run the animation that will be used to "show" the player options. So like "unfolding" etc.
 					if (CurrentTurnCharacter is PartyMember)
@@ -1835,9 +1842,6 @@ EventSkipOver:
 						String currentIdle = String.Format("{0}_{1}", "IdleRight", Enum.GetName(typeof(EWeaponType), (EWeaponType)CurrentTurnCharacter.CurrentWeapon.Value.Weapon_Type));
 						if(!CurrentTurnCharacter.GetSpriteSheet().CurrentAnimation.Name.Contains("Idle"))
 							QueueCombatAction(new CombatAnimationAction(this, CurrentPartyMember_turn, currentIdle));
-
-						//What weapon are we using?
-
 
 						#region Attack Sticker UI
 						//Load the position for the attack sticker. and get ready to display it.
@@ -2054,6 +2058,16 @@ EventSkipOver:
 								//saving the past state will allow the state machine to advance to choose target.
 								//State => StartPhysicalAttack
 								//CombatState = ECombatState.StartPhysicalAttack;
+								
+								// We cannot allow the player to proceed if they have a ammo based weapon, and they are out of ammo.
+								if (entityWeaponType == EWeaponType.Bow || entityWeaponType == EWeaponType.Gun)
+								{
+									if (!CurrentTurnCharacter.CanAttack())
+									{
+										debug_LogBlock.Text = String.Format("Attempted To Use Ammo, but not enough. try reloading!");
+										return;
+									}
+								}
 
 								//State => ChooseTarget
 								pastCombatState = ECombatState.StartPhysicalAttack;
@@ -2108,6 +2122,39 @@ EventSkipOver:
 
 
 								//}
+								break;
+
+							case EBattleCommand.RELOAD:
+								debug_LogBlock.Text = String.Format("LAST HIT => CBS {0} | Reload Request | Key: {1}",
+									combatState.ToString(), pressedkey.ToString());
+
+								// Reloading is your turn.
+								if (entityWeaponType == EWeaponType.Bow || entityWeaponType == EWeaponType.Gun)
+								{
+									if(CurrentTurnCharacter.CurrentWeapon.Value.CurrentAmmo < CurrentTurnCharacter.CurrentWeapon.Value.MaxAmmo)
+										CurrentTurnCharacter.CurrentWeapon.Value.Reload();
+									pastCombatState = ECombatState.WaitingForInput;
+									CombatState = ECombatState.EndEntityTurn;
+
+									// TODO: play the reload animation
+
+									// Remove all the Choosing UI from the screen!
+									bDrawAttackSticker_UI = false;
+									bDrawDefenseSticker_UI = false;
+									bDrawSkillsSticker_UI = false;
+									bDrawSkillMenu_UI = false;
+
+									bDrawStanceLeftArrow_UI = false;
+									bDrawWeaponLeftArrow_UI = false;
+									bDrawStanceRightArrow_UI = false;
+									bDrawWeaponRightArrow_UI = false;
+
+									bDrawInventorySticker_UI = false;
+
+									// Move player back to thier spawn position
+									QueueCombatAction(new CombatMoveAction(this, (CurrentTurnCharacter), (int)CurrentTurnCharacter.SpawnPosition.X, (int)CurrentTurnCharacter.SpawnPosition.Y, 12, false));
+								}
+
 								break;
 							default:
 								throw new ArgumentOutOfRangeException();
@@ -2324,6 +2371,8 @@ EventSkipOver:
 						//Move enemy back to spawn position
 						QueueCombatAction(new CombatMoveAction(this, (currentEnemy_turn), (int)currentEnemy_turn.SpawnPosition.X, (int)currentEnemy_turn.SpawnPosition.Y, 8, false));
 
+						CurrentTurnCharacter.Attack();
+
 						//End the attack
 						combatState = ECombatState.EndAttack;
 					}
@@ -2400,6 +2449,9 @@ EventSkipOver:
 
 
 						bDrawSelectArrowUI = false; // Hide the Selection Icon!
+
+						// This will handle the required attack events. Ammo, stat steal etc.
+						CurrentTurnCharacter.Attack();
 
 						//Play the animation.
 
@@ -3322,6 +3374,9 @@ EventSkipOver:
 				retBattleCommand = EBattleCommand.STANCE;
 			else if (key == (StanceRightKey))
 				retBattleCommand = EBattleCommand.STANCE;
+
+			else if (key == (ReloadKey))
+				retBattleCommand = EBattleCommand.RELOAD;
 
 			else if (key == (BackKey))
 				retBattleCommand = EBattleCommand.BACK;
