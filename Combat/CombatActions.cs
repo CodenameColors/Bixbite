@@ -625,7 +625,7 @@ namespace BixBite.Combat
 				screenbounds,
 				particleImage, new Rectangle(0, 0, particleImage.Width, particleImage.Height), numParticles,
 				launchFrequency, particlePerLaunch, bCycleParticles,
-				particleImage, (int)(particleImage.Width), (int)(particleImage.Height), transparency,
+				particleImage, (int) (particleImage.Width), (int) (particleImage.Height), transparency,
 				scalarX, ScalarY,
 				bColliable,
 				gravity, wind,
@@ -634,6 +634,7 @@ namespace BixBite.Combat
 				lowLifeSpan, highLifeSpawn, rng
 			);
 			this.newEmittier = pe;
+			pe.bIsActive = true;
 
 			pe.SetNewEmitterBounds(spawnRectangle);
 		}

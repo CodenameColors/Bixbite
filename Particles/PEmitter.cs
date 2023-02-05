@@ -22,7 +22,7 @@ namespace BixBite.Particles
 		protected int particlesPerLaunch;
 		protected bool bCycleParticles;
 
-		protected bool bIsActive = false;
+		public bool bIsActive = false;
 		protected bool bLaunched = false;
 		protected float timePassed = 0;
 		protected int DeadParticles = 0;

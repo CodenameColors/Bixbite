@@ -40,14 +40,13 @@ namespace BixBite.Particles
 
 		public override void SetPosition(Vector2 newPos)
 		{
-			this.emitterBounds.X = (int)newPos.X;
-			this.emitterBounds.Y = (int)newPos.Y;
 
 			base.SetPosition(newPos);
 		}
 
 		public override void Update(float deltaTime)
 		{
+
 			if (bIsActive)
 			{
 				//particle explosion

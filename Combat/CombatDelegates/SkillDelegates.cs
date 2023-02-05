@@ -66,6 +66,7 @@ namespace BixBite.Combat.CombatDelegates
 			PartyMember pm = paramList[0] as PartyMember;
 			List<BattleEntity> affectedBattleEntitys = paramList[1] as List<BattleEntity>;
 			Skill requestedSkill = paramList[2] as Skill;
+			Random rng = new Random();
 
 			if (pm is null || affectedBattleEntitys is null || requestedSkill is null)
 				//something is missing.
@@ -73,25 +74,19 @@ namespace BixBite.Combat.CombatDelegates
 
 			//This skill hits multiple people.
 			CombatBoxParticleSystemAction cbaction = null;
+			List<CombatMoveAction> batchMoveEmBack = new List<CombatMoveAction>();
+			List<CombatMoveAction> batchMoveEmForward = new List<CombatMoveAction>();
+			List<CombatHitSparkAction> batcHitSparkActions = new List<CombatHitSparkAction>();
 			foreach (BattleEntity bc in affectedBattleEntitys)
 			{
 				Enemy em = bc as Enemy;
 				if (em is null) continue;
-
-				//Move enemy back to simulate a hit
-				cbsref.QueueCombatAction(new CombatMoveAction(cbsref, em, (int) em.SpawnPosition.X + 50, (int) em.SpawnPosition.Y - 10, 10, false));
-
-				cbsref.QueueCombatAction(new CombatDelayAction(cbsref, 100));
-				//Move enemy back to spawn position
-				cbsref.QueueCombatAction(new CombatMoveAction(cbsref, em, (int) em.SpawnPosition.X, (int) em.SpawnPosition.Y, 10, false ));
 
 				//Get the Hit spawn Position of the TARGETED enemy. This skill can HIT MORE THAN ONE.
 				//So get the middle of that sprite first.
 				Vector2 TargetPosition = new Vector2(em.Position.X, em.Position.Y);
 				TargetPosition.X += (float) ((em.Width * em.ScaleX) / 2.0);
 				TargetPosition.Y += (float) ((em.Height * em.ScaleY) / 2.0);
-
-				int TESTint = 1;
 
 				//Load the texture from content.
 				Texture2D particleImg = cbsref.ContentRef.Load<Texture2D>("Images/TestSprites_Ari/Sparkle");
@@ -107,28 +102,49 @@ namespace BixBite.Combat.CombatDelegates
 
 					cbaction = new CombatBoxParticleSystemAction(cbsref,
 						new Rectangle(cbsref.SelectArrowAreaRange_Rect.X, 0, cbsref.SelectArrowAreaRange_Rect.Width, 10), 1,
-						new Rectangle(0, 0, 1920, cbsref.SelectArrowAreaRange_Rect.Bottom - 100),
+						new Rectangle(0, -100, 1920, cbsref.SelectArrowAreaRange_Rect.Bottom ),
 						new Rectangle(0, 0, t.Width, t.Height), 200,
 						1, 2, true,
 						t, 1f,
 						.5f, .5f,
 						false,
-						1000f, 2,
-						85, 95,
-						800f, 1000f,
-						1200, 1600,
-						new Random(), TargetPosition - new Vector2(50, 50), Color.Blue);
+						1500f, -50f,
+						65, 90,
+						800f, 2000f,
+						800, 1200,
+						rng, TargetPosition - new Vector2(50, 50), Color.Blue);
 
 					cbsref.QueueCombatAction(cbaction);
 
+
 					cbsref.QueueCombatAction(new CombatAnimationAction(cbsref, pm, "Skill_Right"));
-					cbsref.QueueCombatAction(new CombatDelayAction(cbsref, 1250)); //wait before setting hit events
+					cbsref.QueueCombatAction(new CombatDelayAction(cbsref, 400)); //wait before setting hit events
 				}
+
+				////Move enemy back to simulate a hit
+				batchMoveEmBack.Add( new CombatMoveAction(cbsref, em, (int)em.SpawnPosition.X + rng.Next(0, 70), (int)em.SpawnPosition.Y - rng.Next(0, 20) , 10, false));
+				//Move enemy back to spawn position
+				batchMoveEmForward.Add(new CombatMoveAction(cbsref, em, (int)em.SpawnPosition.X, (int)em.SpawnPosition.Y, 10, false));
+
 				cbsref.QueueCombatAction(new CombatDamageAction(cbsref, null, pm, false, requestedSkill, new List<Enemy>() {em}, new List<PartyMember>()));
-				cbsref.QueueCombatAction(new CombatHitSparkAction(cbsref, particleImg, TargetPosition - new Vector2(50, 50), Color.Red, false) {scalarX = .25f, ScalarY = .25f});
-				cbsref.QueueCombatAction(new CombatMoveAction(cbsref, em, (int)em.SpawnPosition.X, (int)em.SpawnPosition.Y, 10, false));
-				
+				batcHitSparkActions.Add(new CombatHitSparkAction(cbsref, particleImg, TargetPosition + new Vector2(rng.Next(-10, 60), rng.Next(-20, 20)), Color.Red, false) { scalarX = .20f, ScalarY = .20f});
 			}
+
+			for (int i = 0; i < 6; i++)
+			{
+				cbsref.QueueCombatAction(new CombatBatchMoveAction(cbsref, batchMoveEmBack, false));
+
+				// Show hits
+				foreach (CombatHitSparkAction hitSparkAction in batcHitSparkActions)
+				{
+					cbsref.QueueCombatAction(hitSparkAction);
+				}
+
+				cbsref.QueueCombatAction(new CombatDelayAction(cbsref, 20));
+				cbsref.QueueCombatAction(new CombatBatchMoveAction(cbsref, batchMoveEmForward, false));
+				cbsref.QueueCombatAction(new CombatDelayAction(cbsref, 20));
+			}
+
 			cbsref.QueueCombatAction(new CombatParticleCyclingAction(cbsref, cbaction.newEmittier));
 			cbsref.QueueCombatAction(new CombatAnimationAction(cbsref, pm, "Idle_Right"));
 			cbsref.QueueCombatAction(new CombatMoveAction(cbsref, pm, (int)pm.SpawnPosition.X, (int)pm.SpawnPosition.Y, 10, true));
