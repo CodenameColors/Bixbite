@@ -72,6 +72,11 @@ namespace BixBite.Characters
 		public bool bHasJumped;
 		public int Zindex = 1;
 
+		#region Modifiers
+		public List<ModifierData> StatusEffectModifer_List = new List<ModifierData>();
+		
+		#endregion
+
 		private SpriteSheet _spriteAnimationSheet;
 
 		public BaseEntity()

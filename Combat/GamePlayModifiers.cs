@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Remoting.Services;
 using System.Text;
 using System.Threading.Tasks;
+using BixBite.Characters;
 
 namespace BixBite.Combat
 {
@@ -15,7 +16,8 @@ namespace BixBite.Combat
 		DEFENSE = 2,
 		BUFF = 3,
 		DEBUFF = 4,
-		WILDCARD = 5,
+		STATUS_EFFECT = 5,
+		WILDCARD = 6,
 	}
 
 	#region Enums
@@ -210,6 +212,8 @@ namespace BixBite.Combat
 		public String Function_PTR { get; set; }
 		public bool bEffect { get; set; }
 
+		public BattleEntity RequestedBaseEntity;
+
 		private EModifierUseType _modifierusetype = EModifierUseType.NONE;
 		public EModifierUseType Use_Type
 		{
@@ -228,6 +232,148 @@ namespace BixBite.Combat
 		}
 
 		public String Skills_FK { get; set; }
+
+
+		/// <summary>
+		/// Used for the database binding
+		/// </summary>
+		public ModifierData()
+		{
+		}
+
+		public ModifierData(BattleEntity requestBattleEntity)
+		{
+			this.RequestedBaseEntity = requestBattleEntity;
+		}
+
+		public void DecreaseTurnCounter()
+		{
+			if (this.Turn_Modifiers > 0)
+			{
+				if ((this.Turn_Modifiers & (int)ETurnEffectModifiers.ThreeTurnEffect)> 0)
+				{
+					this.Turn_Modifiers = (int)ETurnEffectModifiers.TwoTurnEffect;
+				}
+				else if ((this.Turn_Modifiers & (int)ETurnEffectModifiers.TwoTurnEffect) > 0)
+				{
+					this.Turn_Modifiers = (int)ETurnEffectModifiers.OneTurnEffect;
+				}
+				else if ((this.Turn_Modifiers & (int)ETurnEffectModifiers.OneTurnEffect) > 0)
+				{
+					this.Turn_Modifiers = (int)ETurnEffectModifiers.NONE;
+				}
+			}
+		}
+
+		public float GetSeverityPercentage(int severityBits)
+		{
+			float retFloat = 0.0f;
+			for (int i = 31; i >= 0; i--)
+			{
+				switch ((ESeverityEffectModifiers) (severityBits & (0x1 << 31)))
+				{
+					case ESeverityEffectModifiers.NONE:
+						return 0.0f;
+					case ESeverityEffectModifiers.Tiny:
+						return 0.05f;
+					case ESeverityEffectModifiers.Small:
+						return 0.10f;
+					case ESeverityEffectModifiers.Medium:
+						return 0.15f;
+					case ESeverityEffectModifiers.Large:
+						return 0.20f;
+					case ESeverityEffectModifiers.Whale:
+						return 0.25f;
+					case ESeverityEffectModifiers.Rediculous:
+						return .40f;
+				}
+			}
+			return retFloat;
+		}
+
+		public EStatusEffectReturnType ApplyStatusEffect()
+		{
+			foreach (ModifierData Modifier in RequestedBaseEntity.StatusEffectModifer_List)
+			{
+				if (Modifier.Status_Effect_Modifiers > 0) // There is a status effect we need to handle
+				{
+					// Which status effect is it?
+					for (int i = 0; i < 31; i++)
+					{
+						if ((Modifier.Status_Effect_Modifiers & (0x1 << i) >> i) == 1) // We have a status effect.
+						{
+							// Can we nullify this request?
+							if ((Modifier.Nullify_Status_Effect_Modifiers & (0x1 << i) >> i) == 1)
+								return EStatusEffectReturnType.NULLIFIED;
+
+
+							// what is it?
+							EStatusEffectModifiers statusEffect =
+								(EStatusEffectModifiers)(Modifier.Status_Effect_Modifiers & (0x1 << i));
+
+							switch (statusEffect)
+							{
+								case EStatusEffectModifiers.NONE:
+									break;
+								case EStatusEffectModifiers.Burning:
+									// can we absorb this?
+									bool bCanAbsorb = (Modifier.Magic_Defense_Modifiers & (int)EMagicDefenseModifiers.AbsorbFireDamage) > 0;
+									float percentageAmount = 0.0f;
+
+									// How much damage to apply?
+									if (Modifier.Severity_Modifiers != null)
+										percentageAmount = GetSeverityPercentage((int) Modifier.Severity_Modifiers);
+
+									RequestedBaseEntity.ApplyBurn(this, bCanAbsorb, percentageAmount);
+									break;
+								case EStatusEffectModifiers.Shocked:
+									break;
+								case EStatusEffectModifiers.Tired:
+									break;
+								case EStatusEffectModifiers.Depressed:
+									break;
+								case EStatusEffectModifiers.Angry:
+									break;
+								case EStatusEffectModifiers.Lusting:
+									break;
+								case EStatusEffectModifiers.Greedy:
+									break;
+								case EStatusEffectModifiers.Bloodthirsty:
+									break;
+								case EStatusEffectModifiers.ManaThirsty:
+									break;
+								case EStatusEffectModifiers.Clumsy:
+									break;
+								case EStatusEffectModifiers.Emo:
+									break;
+								case EStatusEffectModifiers.TriggerHappy:
+									break;
+								case EStatusEffectModifiers.Weaken:
+									break;
+								case EStatusEffectModifiers.Curse:
+									break;
+								case EStatusEffectModifiers.Bramble:
+									break;
+								default:
+									throw new ArgumentOutOfRangeException();
+							}
+						}
+					}
+				}
+			}
+			return EStatusEffectReturnType.VALID;
+		}
+
+
+	}
+
+	public enum EStatusEffectReturnType
+	{
+		NONE,
+		VALID,
+		NULLIFIED,
+		ABSORBED,
+		RESISTANCE,
 
 	}
 

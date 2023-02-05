@@ -27,11 +27,21 @@ namespace BixBite.Combat.CombatDelegates
 			if (battleEntity_target is null)
 				throw new Exception(String.Format("Casting of the params list failed for Skill: [{0}]", System.Reflection.MethodBase.GetCurrentMethod()?.Name)); //something is missing.
 
-			//For this modifier we need to set the target on fire [status effect] for X amount of turns
-			battleEntity_target.StatusEffect_List.Add(new BaseStatChange()
+			// Create the Game play modifer for the SetFire Delegate
+			ModifierData setFireGameplayModifier = new ModifierData(battleEntity_target)
 			{
-				bIsActive = false, LengthInTurns = 3, LinkedModifierData = currentModifier, StatToChange = new BaseStats(){Max_Health = (int)(battleEntity_target.Stats.Max_Health * .05f) }
-			});
+				Severity_Modifiers = (int)ESeverityEffectModifiers.Small,
+				Status_Effect_Modifiers = (int) EStatusEffectModifiers.Burning,
+				Turn_Modifiers = (int)ETurnEffectModifiers.ThreeTurnEffect
+			};
+
+			battleEntity_target.AddStatusEffect(setFireGameplayModifier);
+
+			//For this modifier we need to set the target on fire [status effect] for X amount of turns
+			//battleEntity_target.StatusEffect_List.Add(new BaseStatChange()
+			//{
+			//	bIsActive = false, LengthInTurns = 3, LinkedModifierData = currentModifier, StatToChange = new BaseStats(){Max_Health = (int)(battleEntity_target.Stats.Max_Health * .05f) }
+			//});
 		}
 		#endregion
 

@@ -116,8 +116,36 @@ namespace BixBite.Characters
 			set { Stats.Max_Mana = value; }
 		}
 
+		#region Modifier
 		public List<BaseStatChange> StatChange_List = new List<BaseStatChange>();
-		public List<StatusEffectChange> StatusEffect_List = new List<StatusEffectChange>();
+		//public List<StatusEffectChange> StatusEffect_List = new List<StatusEffectChange>();
+		private List<ModifierData> _statusEffect_List = new List<ModifierData>();
+
+		public void AddStatusEffect(ModifierData statusEffect)
+		{
+			StatusEffectModifer_List.Add(statusEffect);
+		}
+
+		public void ApplyBurn(ModifierData requestedModifer, bool canAbsorb, float burnPercent)
+		{
+			// TODO: Decrease the turn counter.
+			requestedModifer.DecreaseTurnCounter();
+
+			// TODO: Apply Fire UI Effect.
+
+			// TODO: Apply Fire Sprite Effect.
+
+			// TODO: Apply Fire Particle system
+
+			// Apply Damage. or absorb it
+			if (canAbsorb)
+				this.CurrentHealth += (int)(MaxHealth * burnPercent);
+			else this.CurrentHealth -= (int)(MaxHealth * burnPercent);
+		}
+
+		#endregion
+
+
 
 		public Texture2D Icon { get; set; }
 

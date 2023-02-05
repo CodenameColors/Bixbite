@@ -1618,18 +1618,22 @@ EventSkipOver:
 				case ECombatState.StartEntityTurn:
 					//This is the start of an Entities turn (good or bad)
 					//Remove stat changes if we need too.
-					//TODO: make this a do while
-					for (int i = 0; i < CurrentTurnCharacter.StatusEffect_List.Count; i++)
-					{
 
-						//TODO: find the type of status effect type. For now i assume burning
-						if (CurrentTurnCharacter.StatusEffect_List[i].LengthInTurns != 0)
+					// Using the reworked Status effects.
+					for (int i = CurrentTurnCharacter.StatusEffectModifer_List.Count-1; i >= 0; i--)
+					{
+						ModifierData modifier = CurrentTurnCharacter.StatusEffectModifer_List[i];
+
+						// Remove if the time is up
+						if (modifier.Turn_Modifiers == 0) CurrentTurnCharacter.StatusEffectModifer_List.Remove(modifier);
+						else
 						{
-							CurrentTurnCharacter.Stats.Current_Health -= (int)CurrentTurnCharacter.StatusEffect_List[i].StatToChange.Current_Health;
-							CurrentTurnCharacter.StatusEffect_List[i].DecrementTurnCounter();
+							modifier.ApplyStatusEffect();
+
 							//Move enemy back to simulate a hit
 							QueueCombatAction(new CombatMoveAction(this, (CurrentTurnCharacter), (int)CurrentTurnCharacter.SpawnPosition.X + 50, (int)CurrentTurnCharacter.SpawnPosition.Y - 10, 10, true));
 
+							// TODO: move this into the battle entity class
 							//Get the Hit spawn Position of the CurrentTurnCharacter. This skill ONLY hits one.
 							Vector2 TargetPosition = new Vector2(CurrentTurnCharacter.Position.X, CurrentTurnCharacter.Position.Y);
 							TargetPosition.X += (float)((CurrentTurnCharacter.Width * CurrentTurnCharacter.ScaleX) / 2.0);
@@ -1637,18 +1641,47 @@ EventSkipOver:
 
 							QueueCombatAction(new CombatHitSparkAction(this, this.ContentRef.Load<Texture2D>("Images/TestSprites_Ari/Sparkle"),
 									TargetPosition - new Vector2(50, 50), Color.Red, false)
-								{ scalarX = .25f, ScalarY = .25f });
+							{ scalarX = .25f, ScalarY = .25f });
 
 							//move the character back to their past position.
 							QueueCombatAction(new CombatMoveAction(this, CurrentTurnCharacter, (int)CurrentTurnCharacter.SpawnPosition.X, (int)CurrentTurnCharacter.SpawnPosition.Y, 10, true));
 							QueueCombatAction(new CombatDelayAction(this, 500)); //wait before setting hit events
-							//bMovementInProgress = true; //Do not allow delay UNTIL movement is done.
-						}
-						else
-						{
-							CurrentTurnCharacter.StatusEffect_List.RemoveAt(i);
+							bMovementInProgress = true; //Do not allow delay UNTIL movement is done
 						}
 					}
+
+
+					////TODO: make this a do while
+					//for (int i = 0; i < CurrentTurnCharacter.StatusEffect_List.Count; i++)
+					//{
+
+					//	//TODO: find the type of status effect type. For now i assume burning
+					//	if (CurrentTurnCharacter.StatusEffect_List[i].LengthInTurns != 0)
+					//	{
+					//		CurrentTurnCharacter.Stats.Current_Health -= (int)CurrentTurnCharacter.StatusEffect_List[i].StatToChange.Current_Health;
+					//		CurrentTurnCharacter.StatusEffect_List[i].DecrementTurnCounter();
+					//		//Move enemy back to simulate a hit
+					//		QueueCombatAction(new CombatMoveAction(this, (CurrentTurnCharacter), (int)CurrentTurnCharacter.SpawnPosition.X + 50, (int)CurrentTurnCharacter.SpawnPosition.Y - 10, 10, true));
+
+					//		//Get the Hit spawn Position of the CurrentTurnCharacter. This skill ONLY hits one.
+					//		Vector2 TargetPosition = new Vector2(CurrentTurnCharacter.Position.X, CurrentTurnCharacter.Position.Y);
+					//		TargetPosition.X += (float)((CurrentTurnCharacter.Width * CurrentTurnCharacter.ScaleX) / 2.0);
+					//		TargetPosition.Y += (float)((CurrentTurnCharacter.Height * CurrentTurnCharacter.ScaleY) / 2.0);
+
+					//		QueueCombatAction(new CombatHitSparkAction(this, this.ContentRef.Load<Texture2D>("Images/TestSprites_Ari/Sparkle"),
+					//				TargetPosition - new Vector2(50, 50), Color.Red, false)
+					//			{ scalarX = .25f, ScalarY = .25f });
+
+					//		//move the character back to their past position.
+					//		QueueCombatAction(new CombatMoveAction(this, CurrentTurnCharacter, (int)CurrentTurnCharacter.SpawnPosition.X, (int)CurrentTurnCharacter.SpawnPosition.Y, 10, true));
+					//		QueueCombatAction(new CombatDelayAction(this, 500)); //wait before setting hit events
+					//		//bMovementInProgress = true; //Do not allow delay UNTIL movement is done.
+					//	}
+					//	else
+					//	{
+					//		CurrentTurnCharacter.StatusEffect_List.RemoveAt(i);
+					//	}
+					//}
 
 
 					if (CurrentTurnCharacter is Enemy enemyturn)
