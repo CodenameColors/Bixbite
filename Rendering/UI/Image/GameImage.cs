@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BixBite.Combat;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -108,13 +109,7 @@ namespace BixBite.Rendering.UI.Image
 		{
 			if (!bIsActive) return;
 
-			for (int i = interpolationMovement.Count -1 ; i >= 0; i--)
-			{
-				if (interpolationMovement[i].bIsDone)
-					interpolationMovement.Remove(interpolationMovement[i]);
-				else
-					interpolationMovement[i].Update(gameTime);
-			}
+			base.Update(gameTime);
 
 		}
 

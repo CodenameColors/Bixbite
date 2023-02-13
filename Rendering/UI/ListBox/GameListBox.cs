@@ -524,6 +524,7 @@ namespace BixBite.Rendering.UI.ListBox
 		{
 			if (bIsActive)
 			{
+				base.Update(gameTime);
 
 				if (IsIncrementThroughList(IncrementKey, PageIncrementKey))
 				{

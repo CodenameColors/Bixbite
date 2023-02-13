@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using BixBite.Characters;
 using BixBite.Combat.Equipables.Weapons;
@@ -15,6 +16,7 @@ using BixBite.Rendering.UI;
 using BixBite.Rendering.UI.ListBox;
 using BixBite.Rendering.UI.ListBox.ListBoxItems;
 using BixBite.Rendering.UI.TextBlock;
+using BixBite.Tweening;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -364,6 +366,8 @@ namespace BixBite.Combat
 		private int currentEnemyIndex = 0;
 		private int MaxEnemyIndex { get => CurrentEnemiesNames.Count - 1; }
 		public List<String> CurrentEnemiesNames = new List<string>();
+
+		const float c_timeToLoadTurnQueue = .65f;
 
 		//The character to move, and the x, and y, interpolation per tick
 		//public Queue<Tuple<BattleEntity, int, int, int>> MovementQueue = new Queue<Tuple<BattleEntity, int, int, int >>();
@@ -1563,6 +1567,7 @@ EventSkipOver:
 
 
 					//Before we checked the modifiers. Now we need to check the equipment for stat increases
+					// TODO: MOVE THIS INTO THE RESPECTED CLASSES
 					foreach (PartyMember pm in PartyMembers.Values)
 					{
 						foreach (Equipable equipable in pm.GetEquipment())
@@ -1601,7 +1606,11 @@ EventSkipOver:
 					break;
 				case ECombatState.StartTurn:
 					//Beginning of the WHOLE turn so we need to figure out the order.
-					FillTurnQueue();
+					FillTurnQueue(c_timeToLoadTurnQueue);
+
+					// Delay the combat system to wait for the turn queue to move to the correct position
+					//this.QueueCombatAction(new CombatDelayAction(this, (int)c_timeToLoadTurnQueue * 1000));
+
 					//Use the Stats of the spawned characters to determine the queue order.
 					CurrentTurnCharacter = TurnQueue.Dequeue();
 					//state => StartEntityTurn
@@ -1613,7 +1622,10 @@ EventSkipOver:
 					combatState = ECombatState.StartFollowupAttacks;
 
 					//Reset Turn Queue!
-					FillTurnQueue();
+					FillTurnQueue(c_timeToLoadTurnQueue);
+
+					// Delay the combat system to wait for the turn queue to move to the correct position
+					this.QueueCombatAction(new CombatDelayAction(this, (int)c_timeToLoadTurnQueue * 1000));
 
 					//State => StartTurn
 					//CombatState = ECombatState.StartTurn;
@@ -3405,7 +3417,7 @@ EventSkipOver:
 
 		//TODO: Change it so this uses equation of stats.
 		//Currently im using the DEFAULT setting of FUCK it.
-		public void FillTurnQueue()
+		public void FillTurnQueue(float interpTime)
 		{
 			TurnQueue.Clear();
 			//which is bigger.
@@ -3494,6 +3506,43 @@ EventSkipOver:
 				TurnQueue_GameListBox.Items[counter++].bIsActive = true;
 			}
 			TurnQueue_GameListBox.ResetSelected();
+
+
+			// We are going to get the current positions of the turn queue objects. move them off screen. and Interpolate them on screen!
+			for (int j = 0; j < TurnQueue_GameListBox.Items.Count; j++)
+			{
+				GameListBoxItem listBoxItem = TurnQueue_GameListBox.Items[j] as GameListBoxItem;
+
+				int offScreenOffset = 1750;
+
+				// first get the current position (which is the final)
+				int finalPos = listBoxItem.XPos;
+				listBoxItem.XPos += offScreenOffset; // Moves it off screen.
+				// TurnQueue_GameListBox.HighlightedPosition.X += offScreenOffset;
+
+				listBoxItem.AddInterpolationMovement(new Tweening.Tweening(listBoxItem.XPos, finalPos, interpTime + (.01f * (j * j)),
+						EEasingFunction.QUARTIC, EEasingType.OUT)
+				{
+					ChangeVariable_HookFunction = d =>
+					{
+						listBoxItem.XPos = (int) d;
+						// TurnQueue_GameListBox.HighlightedPosition.X = (int) d;
+					}
+				});
+
+				foreach (var baseUI in listBoxItem.Controls)
+				{
+					baseUI.XPos += offScreenOffset;
+
+					baseUI.AddInterpolationMovement(new Tweening.Tweening(baseUI.XPos, finalPos, interpTime + (.01f * (j * j)),
+							EEasingFunction.QUARTIC, EEasingType.OUT)
+						{ ChangeVariable_HookFunction = d => baseUI.XPos = (int)d });
+				}
+
+
+			}
+
+			//this.QueueCombatAction(new CombatDelayAction(this, 750));
 
 		} 
 

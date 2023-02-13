@@ -216,7 +216,9 @@ namespace BixBite.Tweening
 						}
 					break;
 			}
-			return _interpValue;
+			// Should never get here...
+			Console.WriteLine("[ERROR]: \tNO TWEENING FUNCTION TO MATCH DESIRED!!!");
+			return 0.0f;
 		}
 
 	}

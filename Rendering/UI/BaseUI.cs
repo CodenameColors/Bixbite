@@ -186,6 +186,17 @@ namespace BixBite.Rendering.UI
 			interpolationMovement.Add(tween);
 		}
 
+		public virtual void Update(GameTime gameTime)
+		{
+			for (int i = interpolationMovement.Count - 1; i >= 0; i--)
+			{
+				if (interpolationMovement[i].bIsDone)
+					interpolationMovement.Remove(interpolationMovement[i]);
+				else
+					interpolationMovement[i].Update(gameTime);
+			}
+		}
+
 		#endregion
 
 

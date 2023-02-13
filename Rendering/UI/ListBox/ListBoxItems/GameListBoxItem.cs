@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BixBite.Rendering.UI.Checkbox;
+using BixBite.Rendering.UI.Image;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -139,17 +140,23 @@ namespace BixBite.Rendering.UI.ListBox.ListBoxItems
 		{
 			if (bIsActive)
 			{
+				base.Update(gameTime);
+
 				//In here we need to think of the players input and render components as needed.
-				for (int i = 0; i < Controls.Count; i++)
+				foreach (var baseUi in Controls)
 				{
-					if (Controls[i] is Button.GameButton but)
+					if (baseUi is Button.GameButton but)
 					{
 						but.Update(gameTime);
 					}
-					else if (Controls[i] is GameCheckBox GCB)
+					else if (baseUi is GameCheckBox GCB)
 					{
 						GCB.Update(gameTime);
 
+					}
+					else if (baseUi is Image.GameImage gameImage)
+					{
+						gameImage.Update(gameTime);
 					}
 				}
 			}
