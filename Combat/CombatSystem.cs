@@ -1570,6 +1570,13 @@ EventSkipOver:
 					// TODO: MOVE THIS INTO THE RESPECTED CLASSES
 					foreach (PartyMember pm in PartyMembers.Values)
 					{
+						int posX = (int)pm.SpawnPosition.X;
+						pm.SetPosition(-1000, null);
+						pm.AddInterpolationMovement(new Tweening.Tweening((int)pm.DrawPosRectangle.X, posX, .75f,
+							EEasingFunction.CUBIC, EEasingType.OUT)
+							{ChangeVariable_HookFunction = d => pm.SetPosition((int)d, null) });
+						//pm.Position.X -= 1000f;
+
 						foreach (Equipable equipable in pm.GetEquipment())
 						{
 							if (equipable is null || equipable is Weapon) continue;
@@ -1584,6 +1591,7 @@ EventSkipOver:
 					}
 					foreach (Enemy em in BattleEnemyList.Values)
 					{
+						//em.SetPosition(em.DrawPosRectangle.X + 1000, null);
 						foreach (Equipable equipable in em.GetEquipment())
 						{
 							if (equipable is null || equipable is Weapon) continue;

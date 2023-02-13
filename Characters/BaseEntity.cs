@@ -74,8 +74,9 @@ namespace BixBite.Characters
 
 		#region Modifiers
 		public List<ModifierData> StatusEffectModifer_List = new List<ModifierData>();
-		
+
 		#endregion
+		public List<Tweening.Tweening> interpolationMovement = new List<Tweening.Tweening>();
 
 		private SpriteSheet _spriteAnimationSheet;
 
@@ -217,9 +218,23 @@ namespace BixBite.Characters
 			this.ShaderHitTimer = newhittimer;
 		}
 
+		public void AddInterpolationMovement(Tweening.Tweening tween)
+		{
+			interpolationMovement.Add(tween);
+		}
+
+
 		public virtual void Update(GameTime gameTime)
 		{
 			_spriteAnimationSheet?.Update(gameTime);
+
+			for (int i = interpolationMovement.Count - 1; i >= 0; i--)
+			{
+				if (interpolationMovement[i].bIsDone)
+					interpolationMovement.Remove(interpolationMovement[i]);
+				else
+					interpolationMovement[i].Update(gameTime);
+			}
 		}
 
 		public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
