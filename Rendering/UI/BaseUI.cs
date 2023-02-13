@@ -180,6 +180,12 @@ namespace BixBite.Rendering.UI
 				UIElements.Remove(gameUI);
 			}
 		}
+
+		public void AddInterpolationMovement(Tweening.Tweening tween)
+		{
+			interpolationMovement.Add(tween);
+		}
+
 		#endregion
 
 

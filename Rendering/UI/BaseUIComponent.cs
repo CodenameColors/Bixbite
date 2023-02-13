@@ -12,6 +12,7 @@ namespace BixBite.Rendering.UI
 		public String UIName { get; set; }
 
 		public bool bIsMoving { get; set; }
+		public List<Tweening.Tweening> interpolationMovement = new List<Tweening.Tweening>();
 
 		/// <summary>
 		/// Should we draw this to the screen?

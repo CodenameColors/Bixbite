@@ -101,7 +101,7 @@ namespace BixBite.Combat.CombatDelegates
 					Texture2D t = cbsref.ContentRef.Load<Texture2D>("Images/TestSprites_Ari/Arrow_white");
 
 					cbaction = new CombatBoxParticleSystemAction(cbsref,
-						new Rectangle(cbsref.SelectArrowAreaRange_Rect.X, 0, cbsref.SelectArrowAreaRange_Rect.Width, 10), 1,
+						new Rectangle(cbsref.SelectArrowAreaRange_Rect.X, -100, cbsref.SelectArrowAreaRange_Rect.Width, 10), 1,
 						new Rectangle(0, -100, 1920, cbsref.SelectArrowAreaRange_Rect.Bottom ),
 						new Rectangle(0, 0, t.Width, t.Height), 200,
 						1, 2, true,

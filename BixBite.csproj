@@ -192,6 +192,7 @@
     <Compile Include="TimelinePlayer\ChoiceTimeBlock.cs" />
     <Compile Include="TimelinePlayer\TimeBlock.cs" />
     <Compile Include="TimelinePlayer\Timeline.cs" />
+    <Compile Include="Tweening\Tweening.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\FMOD\x64\fmod.dll">

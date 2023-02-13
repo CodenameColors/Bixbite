@@ -107,6 +107,15 @@ namespace BixBite.Rendering.UI.Image
 		public void Update(GameTime gameTime)
 		{
 			if (!bIsActive) return;
+
+			for (int i = interpolationMovement.Count -1 ; i >= 0; i--)
+			{
+				if (interpolationMovement[i].bIsDone)
+					interpolationMovement.Remove(interpolationMovement[i]);
+				else
+					interpolationMovement[i].Update(gameTime);
+			}
+
 		}
 
 		public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
