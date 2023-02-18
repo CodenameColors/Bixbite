@@ -3,26 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace TimelinePlayer.Components
+namespace BixBite.TimelinePlayer
 {
 	public class Timeline : Canvas
 	{
 		public String TrackName = "";
 		public String TrackImagePath = null;
 		public double TimePerPixel;
-		public LinkedListNode<TimeBlock> ActiveBlock;
-		public LinkedList<TimeBlock> timeBlocksLL
+		public LinkedListNode<BixBite.TimelinePlayer.TimeBlock> ActiveBlock;
+		public LinkedList<BixBite.TimelinePlayer.TimeBlock> timeBlocksLL
 		{
 			get { return LLTimeBlocks; }
-			set { LLTimeBlocks = new LinkedList<TimeBlock>(value); }
+			set { LLTimeBlocks = new LinkedList<BixBite.TimelinePlayer.TimeBlock>(value); }
 		}
 
 
@@ -63,13 +60,13 @@ namespace TimelinePlayer.Components
 		}
 
 		public bool TimelineisNull_flag { get; set; }
-		private LinkedList<TimeBlock> LLTimeBlocks = new LinkedList<TimeBlock>();
+		private LinkedList<BixBite.TimelinePlayer.TimeBlock> LLTimeBlocks = new LinkedList<BixBite.TimelinePlayer.TimeBlock>();
 
 		public Timeline(int TimeWidth, double InitialSize)
 		{
 			this.HorizontalAlignment = HorizontalAlignment.Left;
 			Margin = new Thickness(0);
-			timeBlocksLL = new LinkedList<TimeBlock>();
+			timeBlocksLL = new LinkedList<BixBite.TimelinePlayer.TimeBlock>();
 			TimePerPixel = 1.0 / TimeWidth;
 			ActiveBlock = timeBlocksLL.First;
 			this.SizeChanged += Timeline_SizeChanged;
@@ -78,7 +75,7 @@ namespace TimelinePlayer.Components
 
 		private void Timeline_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
-			foreach (TimeBlock tblock in LLTimeBlocks)
+			foreach (BixBite.TimelinePlayer.TimeBlock tblock in LLTimeBlocks)
 			{
 				tblock.ScaleToTimeline();
 				//tblock.RenderTransform = this.RenderTransform;
@@ -89,7 +86,7 @@ namespace TimelinePlayer.Components
 		{
 			
 			this.TimePerPixel = 1.0 / TimeWidthPix;
-			foreach (TimeBlock tblock in LLTimeBlocks)
+			foreach (BixBite.TimelinePlayer.TimeBlock tblock in LLTimeBlocks)
 			{
 				//tblock.RenderTransform = this.RenderTransform;
 			}
@@ -98,7 +95,7 @@ namespace TimelinePlayer.Components
 		/// <summary>
 		/// this method is here to INSERT the time block into the timeline's linked list in the CORRECT spot
 		/// </summary>
-		public void AddTimeBlock(TimeBlock timeBlock, double timeWidth, bool resetptr = true)
+		public void AddTimeBlock(BixBite.TimelinePlayer.TimeBlock timeBlock, double timeWidth, bool resetptr = true)
 		{
 			
 			LLTimeBlocks.AddLast(timeBlock);
@@ -137,7 +134,7 @@ namespace TimelinePlayer.Components
 		public void InitActiveBlock(double CurTime)
 		{
 			SortTimeBlocksLL();
-			LinkedListNode<TimeBlock> curBlock = LLTimeBlocks.First;
+			LinkedListNode<BixBite.TimelinePlayer.TimeBlock> curBlock = LLTimeBlocks.First;
 			while(curBlock != null)
 			{
 				if (CurTime >= curBlock.Value.StartTime && CurTime <= curBlock.Value.EndTime)
@@ -152,10 +149,10 @@ namespace TimelinePlayer.Components
 
 		public void SortTimeBlocksLL()
 		{
-			List<TimeBlock> TempTBlocks = LLTimeBlocks.ToList();
-			TempTBlocks = (List<TimeBlock>)(TempTBlocks.OrderBy(o => o.StartTime).ToList());
+			List<BixBite.TimelinePlayer.TimeBlock> TempTBlocks = LLTimeBlocks.ToList();
+			TempTBlocks = (List<BixBite.TimelinePlayer.TimeBlock>)(TempTBlocks.OrderBy(o => o.StartTime).ToList());
 			LLTimeBlocks.Clear();
-			foreach (TimeBlock tblock in TempTBlocks)
+			foreach (BixBite.TimelinePlayer.TimeBlock tblock in TempTBlocks)
 			{
 				LLTimeBlocks.AddLast(tblock);
 			}
@@ -166,10 +163,10 @@ namespace TimelinePlayer.Components
 			LLTimeBlocks.Clear();
 		}
 
-		public bool SetActiveTBlock(TimeBlock desiredTimeBlock)
+		public bool SetActiveTBlock(BixBite.TimelinePlayer.TimeBlock desiredTimeBlock)
 		{
 			bool retb = false;
-			LinkedListNode<TimeBlock> TBN = LLTimeBlocks.First;
+			LinkedListNode<BixBite.TimelinePlayer.TimeBlock> TBN = LLTimeBlocks.First;
 			while (TBN != null)
 			{
 				if (TBN.Value == desiredTimeBlock)

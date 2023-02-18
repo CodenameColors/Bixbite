@@ -86,6 +86,8 @@ namespace BixBite.Rendering.UI.TextBlock
 			Text = text;
 		}
 
+
+
 		#endregion
 
 		#region Methods

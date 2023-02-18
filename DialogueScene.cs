@@ -13,6 +13,9 @@ using BixBite.NodeEditor;
 using BixBite.NodeEditor.Logic;
 using BixBite.Resources;
 using TimelinePlayer.Components;
+using ChoiceTimeBlock = BixBite.TimelinePlayer.ChoiceTimeBlock;
+using TimeBlock = BixBite.TimelinePlayer.TimeBlock;
+using Timeline = BixBite.TimelinePlayer.Timeline;
 
 namespace BixBite
 {

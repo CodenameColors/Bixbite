@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BixBite.Rendering.UI.Image
 {
@@ -79,5 +80,31 @@ namespace BixBite.Rendering.UI.Image
 			AddProperty("BackgroundImage", backImage);
 
 		}
+
+		/// <summary>
+		/// THIS IS ONLY FOR THE AMETHYST ENGINE IMPORTATION/EXPORT FILES
+		/// </summary>
+		/// <param name="UIName"></param>
+		/// <param name="Width"></param>
+		/// <param name="Height"></param>
+		/// <param name="Zindex"></param>
+		/// <param name="xoff"></param>
+		/// <param name="yoff"></param>
+		/// <param name="ImagePath"></param>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="BackgroundPath"></param>
+		public BaseImage(string UIName, int Width, int Height, int Zindex, int xoff, int yoff, String ImagePath = "", GraphicsDevice graphicsDevice = null, String BackgroundPath = "#00000000") :
+			base(UIName, Width, Height, Zindex, BackgroundPath)
+		{
+			AddProperty("Xoffset", xoff);
+			AddProperty("YOffset", yoff);
+			AddProperty("Image", ImagePath);
+			this.graphicsDevice = graphicsDevice;
+			if (graphicsDevice != null && ImagePath != "")
+				SetUITexture();
+		}
+
+
+
 	}
 }

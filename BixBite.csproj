@@ -259,6 +259,10 @@
   <PropertyGroup>
     <PostBuildEvent>C:\Users\Antonio\AppData\Local\Programs\Python\Python310\python.exe .\..\..\..\BuildScripts\NodeEditorCopyFiles.py py2exe
 
-C:\Users\Antonio\AppData\Local\Programs\Python\Python310\python.exe .\..\..\..\BuildScripts\NodeEditorPatchFiles.py py2exe</PostBuildEvent>
+C:\Users\Antonio\AppData\Local\Programs\Python\Python310\python.exe .\..\..\..\BuildScripts\BixbiteCopyForAmetheystEngine.py py2exe
+
+
+C:\Users\Antonio\AppData\Local\Programs\Python\Python310\python.exe .\..\..\..\BuildScripts\NodeEditorPatchFiles.py py2exe
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

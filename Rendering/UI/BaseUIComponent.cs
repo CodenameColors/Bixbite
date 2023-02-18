@@ -24,7 +24,7 @@ namespace BixBite.Rendering.UI
 		public int YPos { get; set; }
 		public int Width { get; set; }
 		public int Height { get; set; }
-
+		
 		//public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
 		//public abstract void Update(GameTime gameTime);
