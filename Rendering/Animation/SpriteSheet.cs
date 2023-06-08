@@ -142,7 +142,7 @@ namespace BixBite.Rendering
 								//now we need to fill in all the offset/frame position data.
 								for (int i = 0; i < numframes; i++)
 								{
-									// tempAnimation.AddFramePosition(new Rect(startx + (fwidth * i), starty));
+									tempAnimation.AddFramePosition(new Rect(startx + (fwidth * i), starty));
 								}
 
 								tempAnimation.ResetAnimation(); //set the first position/pointer.
