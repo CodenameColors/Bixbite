@@ -26,8 +26,6 @@ namespace BixBite.Rendering
 		private String _name = String.Empty;
 		private String _characterName = String.Empty;
 
-		private int _frameWidth = 0;
-		private int _frameHeight = 0;
 		private SpriteAnimation _nextAnimation = null;
 
 		#endregion
@@ -142,7 +140,7 @@ namespace BixBite.Rendering
 								//now we need to fill in all the offset/frame position data.
 								for (int i = 0; i < numframes; i++)
 								{
-									tempAnimation.AddFramePosition(new Rect(startx + (fwidth * i), starty));
+									// tempAnimation.AddFramePosition(new Rect(startx + (fwidth * i), starty));
 								}
 
 								tempAnimation.ResetAnimation(); //set the first position/pointer.
