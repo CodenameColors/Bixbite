@@ -129,6 +129,7 @@
     <Compile Include="Particles\PEmitter.cs" />
     <Compile Include="Projectiles\projectile.cs" />
     <Compile Include="Rendering\Animation\Animation.cs" />
+    <Compile Include="Rendering\Animation\AnimationEvent.cs" />
     <Compile Include="Rendering\Animation\AnimationFrameInfo.cs" />
     <Compile Include="Rendering\Animation\AnimationState.cs" />
     <Compile Include="Rendering\Animation\AnimationStateConnections.cs" />
@@ -263,9 +264,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      python .\..\..\BuildScripts\NodeEditorCopyFiles.py py2exe
-      python .\..\..\BuildScripts\BixbiteCopyForAmetheystEngine.py py2exe
-      python .\..\..\BuildScripts\NodeEditorPatchFiles.py py2exe
-    </PostBuildEvent>
+
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
