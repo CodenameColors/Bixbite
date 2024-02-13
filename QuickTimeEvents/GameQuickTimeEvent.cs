@@ -144,7 +144,7 @@ namespace BixBite.QuickTimeEvents
 		/// LoadContent will be called once per game and is the place to load
 		/// all of your content.
 		/// </summary>
-		protected void LoadContent()
+		public void LoadContent()
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
 			
@@ -156,7 +156,7 @@ namespace BixBite.QuickTimeEvents
 		/// UnloadContent will be called once per game and is the place to unload
 		/// game-specific content.
 		/// </summary>
-		protected void UnloadContent()
+		public void UnloadContent()
 		{
 			// TODO: Unload any non ContentManager content here
 		}
@@ -200,7 +200,7 @@ namespace BixBite.QuickTimeEvents
 		/// checking for collisions, gathering input, and playing audio.
 		/// </summary>
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
-		protected void Update(GameTime gameTime, KeyboardState prevKeyboardState, KeyboardState currentKeyboardState)
+		public void Update(GameTime gameTime, KeyboardState prevKeyboardState, KeyboardState currentKeyboardState)
 		{
 			UpdateUI(gameTime);
 
@@ -249,7 +249,7 @@ namespace BixBite.QuickTimeEvents
 		/// This is called when the game should draw itself.
 		/// </summary>
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
-		protected void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+		public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
 		{
 			
 			spriteBatch.Begin();
