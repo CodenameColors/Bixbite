@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
@@ -427,6 +428,8 @@ namespace BixBite.Rendering.Animation
 															SpriteSheet newSpriteSheet = new SpriteSheet();
 															newSpriteSheet.SpriteSheetPath = (reader.GetAttribute("Path"));
 															newSpriteSheet.SpriteSheetPath = newSpriteSheet.SpriteSheetPath.Replace("{Content}", contentPath);
+															newSpriteSheet.SpriteSheetPath = newSpriteSheet.SpriteSheetPath.Replace(".png", ".xnb");
+
 
 
 															newAnimationLayer.ReferenceSpriteSheets.Add(newSpriteSheet);
@@ -437,6 +440,10 @@ namespace BixBite.Rendering.Animation
 											}
 										} while (reader.Name.Trim() != "Layers");
 									}
+									if(animationState.bIsDefaultState)
+									{
+										returnAnimationStateMachine.CurrentState = animationState;
+                                    }
 									returnAnimationStateMachine.States.Add(stateName, animationState);
 								}
 							} while (reader.Name.Trim() != "AnimationStates");

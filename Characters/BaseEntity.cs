@@ -114,6 +114,21 @@ namespace BixBite.Characters
 			return _spriteAnimationStatemachine;
 		}
 
+		public bool LoadAnimationStateMachine(AnimationStateMachine animationStateMachine)
+		{
+			bool returnStatus = false;
+
+			if (animationStateMachine != null)
+			{
+				this._spriteAnimationStatemachine = animationStateMachine;
+				//load the parameters
+				this.Width = _spriteAnimationStatemachine.DrawRectangle.Width;
+				this.Height = _spriteAnimationStatemachine.DrawRectangle.Height;
+				returnStatus = true;
+			}
+			return returnStatus;
+		}
+
 		/// <summary>
 		/// Loads the SpriteSheet into memory. And sets up the texture of the sprite sheet
 		/// </summary>

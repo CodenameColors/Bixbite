@@ -42,7 +42,10 @@ namespace BixBite.Rendering.Animation
 		#endregion
 
 		#region monogame
-
+		public void LoadSpritesheetTexture2D(Texture2D texture)
+		{
+			this.SpriteSheetImageTexture2D = texture;
+		}
 		#endregion
 	}
 }

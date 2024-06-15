@@ -3159,7 +3159,7 @@ EventSkipOver:
 			#endregion
 
 			//TurnQueue
-			TurnQueue_GameListBox.Update(gameTime);
+			TurnQueue_GameListBox?.Update(gameTime);
 
 			prevKeyState = keyboardState;
 			//If you have pressed two buttons or more we need to ignore this.
