@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,5 +25,22 @@ namespace BixBite.ContentOrganizer
             this.GraphicsDevice = graphicsDevice;
         }
 
+        /// <summary>
+        /// Takes in a monogame object and scans it's data to find out what files we need to load into memory.
+        /// </summary>
+        /// <param name="monogameObject"></param>
+        public void LoadObjectIntoContentMemory(object monogameObject)
+        {
+            // What are all the higher level objects that we use to load to scrren.
+            // Example AnimationStateMachine, has a Spritesheet, and multiple layers, all these need to be loaded
+            // in memory for later. So we would need to scan through the class structure and load the content for us.
+            // So we can use it later for copies etc 
+            // So long story short we need to do this for all the possible hgher monogmame classes.
+        }
+
+        public void UnloadObjectFromContentMemory(object monogameObject) 
+        {
+
+        }
     }
 }
