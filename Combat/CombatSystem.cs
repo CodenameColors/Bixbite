@@ -1913,7 +1913,7 @@ EventSkipOver:
 
 						WeaponLeftArrow_UI_rect =
 							new Rectangle((int)CurrentTurnCharacter.Position.X - 70 + LeftWeaponStickerXOffset_Izzy,
-								 (int)CurrentTurnCharacter.Position.Y + (int)(CurrentTurnCharacter.Height * CurrentTurnCharacter.ScaleY) - 30 + LeftWeaponStickerYOffset_Izzy, LeftWeaponStickerWidth_Izzy, LeftWeaponStickerHeight_izzy);
+								 (int)CurrentTurnCharacter.Position.Y + (int)(CurrentTurnCharacter.Height) - 30 + LeftWeaponStickerYOffset_Izzy, LeftWeaponStickerWidth_Izzy, LeftWeaponStickerHeight_izzy);
 
 						//Quick Bindings for Izzy
 						if (WeaponLeftArrow_UI_izzy != null)
@@ -1929,7 +1929,7 @@ EventSkipOver:
 
 						StanceLeftArrow_UI_rect =
 							new Rectangle((int)CurrentTurnCharacter.Position.X - 30 + LeftStanceStickerXOffset_Izzy,
-								(int)CurrentTurnCharacter.Position.Y + (int)(CurrentTurnCharacter.Height * CurrentTurnCharacter.ScaleY) + 30 + LeftStanceStickerYOffset_Izzy, LeftStanceStickerWidth_Izzy, LeftStanceStickerHeight_izzy);
+								(int)CurrentTurnCharacter.Position.Y + (int)(CurrentTurnCharacter.Height) + 30 + LeftStanceStickerYOffset_Izzy, LeftStanceStickerWidth_Izzy, LeftStanceStickerHeight_izzy);
 
 						//Quick Bindings for Izzy
 						if (StanceLeftArrow_UI_izzy != null)
@@ -1944,8 +1944,8 @@ EventSkipOver:
 						#region Weapon Right Arrow Sticker UI
 
 						WeaponRightArrow_UI_rect =
-							new Rectangle((int)CurrentTurnCharacter.Position.X + (int)(CurrentTurnCharacter.Width * CurrentTurnCharacter.ScaleX) + 30 + RightWeaponStickerXOffset_Izzy,
-								(int)CurrentTurnCharacter.Position.Y + (int)(CurrentTurnCharacter.Height * CurrentTurnCharacter.ScaleY) - 30 + RightWeaponStickerYOffset_Izzy, RightWeaponStickerWidth_Izzy, RightWeaponStickerHeight_izzy);
+							new Rectangle((int)CurrentTurnCharacter.Position.X + (int)(CurrentTurnCharacter.Width) + 30 + RightWeaponStickerXOffset_Izzy,
+								(int)CurrentTurnCharacter.Position.Y + (int)(CurrentTurnCharacter.Height) - 30 + RightWeaponStickerYOffset_Izzy, RightWeaponStickerWidth_Izzy, RightWeaponStickerHeight_izzy);
 
 						//Quick Bindings for Izzy
 						if (WeaponRightArrow_UI_izzy != null)
@@ -1960,15 +1960,17 @@ EventSkipOver:
 						#region Stance Right Arrow Sticker UI
 
 						StanceRightArrow_UI_rect =
-							new Rectangle((int)CurrentTurnCharacter.Position.X + (int)(CurrentTurnCharacter.Width * CurrentTurnCharacter.ScaleX) - 10 + RightStanceStickerXOffset_Izzy,
-								(int)CurrentTurnCharacter.Position.Y + (int)(CurrentTurnCharacter.Height * CurrentTurnCharacter.ScaleY) + 30 + RightStanceStickerYOffset_Izzy, RightStanceStickerWidth_Izzy, RightStanceStickerHeight_izzy);
+							new Rectangle((int)CurrentTurnCharacter.Position.X + (int)(CurrentTurnCharacter.GetAnimationStateMachine().DrawRectangle.Width) - 
+							10 + RightStanceStickerXOffset_Izzy,
+								(int)CurrentTurnCharacter.Position.Y + (int)(CurrentTurnCharacter.GetAnimationStateMachine().DrawRectangle.Height)
+								+ 30 + RightStanceStickerYOffset_Izzy, RightStanceStickerWidth_Izzy, RightStanceStickerHeight_izzy);
 
 						//Quick Bindings for Izzy
 						if (StanceRightArrow_UI_izzy != null)
 							StanceRightArrow_UI = StanceRightArrow_UI_izzy;
 						else
 							StanceRightArrow_UI = ContentRef.Load<Texture2D>("Images/UI/Arrow_Right");
-
+						
 						bDrawStanceRightArrow_UI = true;
 
 						#endregion
@@ -1991,7 +1993,7 @@ EventSkipOver:
 						#region Weapon Card UI
 						//Load the position for the attack sticker. and get ready to display it.
 						WeaponCardSticker_UI_rect =
-							new Rectangle((int)CurrentTurnCharacter.Position.X + 50 + WeaponCardStickerXOffset_Izzy,
+							new Rectangle((int)CurrentTurnCharacter.Position.X + (CurrentTurnCharacter.Width / 2) + WeaponCardStickerWidth_Izzy + WeaponCardStickerXOffset_Izzy,
 								(int)CurrentTurnCharacter.Position.Y + CurrentTurnCharacter.Height - 140 + WeaponCardStickerYOffset_Izzy, WeaponCardStickerWidth_Izzy, WeaponCardStickerHeight_izzy);
 
 						if (WeaponCardSticker_UI == null)
@@ -3521,7 +3523,7 @@ EventSkipOver:
 			{
 				GameListBoxItem listBoxItem = TurnQueue_GameListBox.Items[j] as GameListBoxItem;
 
-				int offScreenOffset = 1750;
+				int offScreenOffset = 2100;
 
 				// first get the current position (which is the final)
 				int finalPos = listBoxItem.XPos;
@@ -3631,9 +3633,12 @@ EventSkipOver:
 			}
 
 			pm.StanceIndicator_Texture2D = ContentRef.Load<Texture2D>("Images/UI/StanceCircle");
-			pm.StanceIndicator_RectangleOffset = new Rectangle(10,pm.Height - pm.StanceIndicator_Texture2D.Height - 50, pm.StanceIndicator_Texture2D.Width, pm.StanceIndicator_Texture2D.Height);
 
+			// We need to get the current animation State Height... this is disgusting
+			int entityHeight = pm.GetAnimationStateMachine().CurrentState.AnimationLayers[0].CurrentFrameProperties.CurrentAnimationFrame.Value.GetDrawRectangle().Height;
 
+			pm.StanceIndicator_RectangleOffset = new Rectangle(10, entityHeight - pm.StanceIndicator_Texture2D.Height - 50, 
+				pm.StanceIndicator_Texture2D.Width, pm.StanceIndicator_Texture2D.Height);
 
 		}
 

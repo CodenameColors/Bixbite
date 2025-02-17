@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using BixBite.Characters;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BixBite.Rendering.Animation
 {
@@ -80,6 +82,7 @@ namespace BixBite.Rendering.Animation
 		#endregion
 
 		#region fields
+		private BaseEntity  _parent = null;
 		private Rectangle _drawRectangle = new Rectangle();
 
 		private int _xpos = -1;
@@ -88,8 +91,8 @@ namespace BixBite.Rendering.Animation
 		private int _xoffset = 0;
 		private int _yoffset = 0;
 
-		private float _scaleX = -1f;
-		private float _scaleY = -1f;
+		private float _scaleX = 1;
+		private float _scaleY = 1;
 
 		private int _width = -1;
 		private int _height = -1;
@@ -97,6 +100,13 @@ namespace BixBite.Rendering.Animation
 
 		#region constructors
 
+		public AnimationStateMachine(BaseEntity parent)
+		{
+			this._parent = parent;
+			this.SetScreenPosition((int)parent.Position.X, (int)parent.Position.Y);
+			this.ScaleX = parent.ScaleX; 
+			this.ScaleY = parent.ScaleY;
+		}
 
 		#endregion
 
@@ -266,9 +276,9 @@ namespace BixBite.Rendering.Animation
 
 		}
 
-		public static AnimationStateMachine ImportAnimationStateMachine(String AnimationStateMachineFilePath, String contentPath)
+		public static AnimationStateMachine ImportAnimationStateMachine(BaseEntity entity, String AnimationStateMachineFilePath, String contentPath)
 		{
-			AnimationStateMachine returnAnimationStateMachine = new AnimationStateMachine();
+			AnimationStateMachine returnAnimationStateMachine = new AnimationStateMachine(entity);
 
 			XmlReaderSettings settings = new XmlReaderSettings
 			{
@@ -466,6 +476,32 @@ namespace BixBite.Rendering.Animation
 			if (CurrentState != null)
 			{
 				CurrentState.Update(gameTime);
+
+				// Update the state machines width and height with the current frame.
+				// _width = CurrentState.Ana
+			}
+		}
+
+		public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+		{
+			if(CurrentState != null)
+			{
+				// If we have a current state we need to draw the current frame on the screen.
+				
+				for(int i = 0; i < CurrentState.AnimationLayers.Count; i++)
+				{
+					AnimationLayer animLayer = CurrentState.AnimationLayers[i];
+					if(i == 0)
+					{
+						// If this is the first layer, it's the BASE LAYER.
+						// This is the width and height we need to use to update our draw rectangle size.
+						animLayer.Draw(spriteBatch, gameTime, this._drawRectangle, ref _width, ref _height);
+					}
+					else
+					{
+						animLayer.Draw(spriteBatch, gameTime, this._drawRectangle);
+					}
+				}
 			}
 		}
 

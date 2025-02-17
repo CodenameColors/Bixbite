@@ -97,12 +97,12 @@ namespace BixBite.Characters
 			if (x != null)
 			{
 				this._screenPosition.X = (int)x;
-				this._spriteAnimationStatemachine.SetScreenPosition(x, null);
+				this._spriteAnimationStatemachine?.SetScreenPosition(x, null);
 			}
 			if (y != null)
 			{
 				this._screenPosition.Y = (int)y;
-				this._spriteAnimationStatemachine.SetScreenPosition(null, y);
+				this._spriteAnimationStatemachine?.SetScreenPosition(null, y);
 			}
 
 			
@@ -263,10 +263,7 @@ namespace BixBite.Characters
 			}
 			else
 			{
-				foreach (AnimationLayer animationLayer in _spriteAnimationStatemachine.CurrentState.AnimationLayers)
-				{
-					animationLayer.Draw(spriteBatch);
-				}
+				_spriteAnimationStatemachine.Draw(spriteBatch, gameTime);
 			}
 		}
 

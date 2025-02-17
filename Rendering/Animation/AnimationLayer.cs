@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BixBite.ContentOrganizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -86,6 +88,7 @@ namespace BixBite.Rendering.Animation
 		public String AnimationName { get; set; }
 		public String CurrentLayerInformationName = "";
 		public ObservableCollection <SpriteSheet> ReferenceSpriteSheets = new ObservableCollection <SpriteSheet>();
+
 
 		public SpriteSheet ReferenceSpriteSheet
 		{
@@ -281,9 +284,26 @@ namespace BixBite.Rendering.Animation
 			}
 		}
 
-		public void Draw(SpriteBatch spriteBatch)
+		public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle parentDrawRectngle, ref int width, ref int height)
 		{
-			spriteBatch.Draw(ReferenceSpriteSheets[this.CurrentFrameProperties.ReferenceSpritesheetIndex].GetTexture2D(), _drawRectangle.ScaleRectangle(ScalarX, ScalarY), CurrentFrameProperties.CurrentAnimationFrame.Value.GetDrawRectangle(), Color.White);
+			_drawRectangle = new Rectangle(parentDrawRectngle.Location, CurrentFrameProperties.CurrentAnimationFrame.Value.GetDrawRectangle().Size);
+
+			spriteBatch.Draw(ReferenceSpriteSheets[this.CurrentFrameProperties.ReferenceSpritesheetIndex].GetTexture2D(),
+				_drawRectangle.ScaleRectangle(_parentAnimationState.ScalarX, _parentAnimationState.ScalarY),
+				CurrentFrameProperties.CurrentAnimationFrame.Value.GetDrawRectangle(), Color.White);
+			
+			width = _drawRectangle.Width;
+			height = _drawRectangle.Height;
+
+		}
+
+		public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle parentDrawRectngle)
+		{
+			_drawRectangle = new Rectangle(parentDrawRectngle.Location, CurrentFrameProperties.CurrentAnimationFrame.Value.GetDrawRectangle().Size);
+
+			spriteBatch.Draw(ReferenceSpriteSheets[this.CurrentFrameProperties.ReferenceSpritesheetIndex].GetTexture2D(),
+				_drawRectangle.ScaleRectangle(_parentAnimationState.ScalarX, _parentAnimationState.ScalarY), 
+				CurrentFrameProperties.CurrentAnimationFrame.Value.GetDrawRectangle(), Color.White);
 		}
 		#endregion
 	}

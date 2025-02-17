@@ -43,6 +43,16 @@ namespace BixBite.Rendering.Animation
 			set => _bIsDefaultState = value;
 		}
 
+		public float ScalarX
+		{
+			get => Parent.ScaleX;
+		}
+
+		public float ScalarY
+		{
+			get => Parent.ScaleY;
+		}
+
 		// These are checked from the animations tate machine on tick/update.
 		public bool bIsAnimationQueued = false;
 		public AnimationState NextState;
